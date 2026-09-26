@@ -19,6 +19,9 @@ What it does (idempotent; running it twice changes nothing the second time):
    - links SBSkin to SFI and MacLibrary, SBSkinWidgets to WidgetExtension,
    - raises the deployment target of those targets (and the macOS apps) to 26.0.
 4. Enables Live Activities in SFI/Info.plist.
+5. With --app-name NAME, replaces the upstream product name in the app display names and
+   in the few visible literals (Mac window title, Quit menu, menu bar label, VPN server
+   label, Files app domain, Control Center toggle).
 
 Nothing in the upstream core (Go, Libbox, the network extension) is touched.
 
@@ -166,6 +169,43 @@ def patch_info_plist(apple):
     with open(path, "wb") as handle:
         plistlib.dump(info, handle)
     return "enabled Live Activities in SFI/Info.plist"
+
+
+# User-visible literals that carry the upstream name. The upstream license does not let
+# derivative works use it, so --app-name swaps them for the new product name.
+UPSTREAM_NAME = "sing-box"
+NAME_SITES = [
+    ("SFI/ApplicationDelegate.swift", 'displayName: "{}"'),
+    ("Library/Network/ExtensionProfile.swift", 'tunnelProtocol.serverAddress = "{}"'),
+    ("MacLibrary/StatusBarController.swift", 'NSTextField(labelWithString: "{}")'),
+    ("MacLibrary/MacApplication.swift", 'Window("{}", id: "main"'),
+    ("MacLibrary/MacApplication.swift", 'Button("Quit {}")'),
+    ("WidgetExtension/ServiceToggleControl.swift", 'ControlWidgetToggle(\n                "{}",'),
+    ("FileProviderExtension/FileProviderItem.swift", 'return "{}"'),
+]
+
+
+def rename_app(apple, name):
+    notes = []
+    for relative, template in NAME_SITES:
+        path = os.path.join(apple, relative)
+        if not os.path.exists(path):
+            notes.append(f"{relative} not found, skipped")
+            continue
+        text = read(path)
+        old, new = template.format(UPSTREAM_NAME), template.format(name)
+        if old in text:
+            write(path, text.replace(old, new))
+            notes.append(f"renamed app in {relative}")
+    project = os.path.join(apple, "sing-box.xcodeproj", "project.pbxproj")
+    text = read(project)
+    old = f'INFOPLIST_KEY_CFBundleDisplayName = "{UPSTREAM_NAME}";'
+    quoted = name if re.fullmatch(r"[A-Za-z0-9_.]+", name) else '"' + name.replace('"', '\\"') + '"'
+    count = text.count(old)
+    if count:
+        write(project, text.replace(old, f"INFOPLIST_KEY_CFBundleDisplayName = {quoted};"))
+        notes.append(f"set CFBundleDisplayName to {name!r} in {count} build configurations")
+    return notes or [f"app name already {name!r}"]
 
 
 def copy_sources(apple):
@@ -338,6 +378,7 @@ def main():
     parser.add_argument("--local", help="use a local SB-Skin checkout instead of GitHub")
     parser.add_argument("--url", default=DEFAULT_URL, help="SB-Skin repository URL")
     parser.add_argument("--branch", default="main", help="SB-Skin branch")
+    parser.add_argument("--app-name", help="replace the upstream product name in display names and visible labels")
     args = parser.parse_args()
 
     apple = os.path.abspath(args.apple)
@@ -352,6 +393,8 @@ def main():
         patch_info_plist(apple),
     ]
     steps += patch_project(apple, args.local, args.url, args.branch)
+    if args.app_name:
+        steps += rename_app(apple, args.app_name)
     for step in steps:
         print(f"  • {step}")
     print("Done. Open sing-box.xcodeproj or build with xcodebuild as usual.")
