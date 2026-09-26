@@ -79,9 +79,11 @@ struct NativeDashboard: View {
                     NativeMetricTile(title: SkinL("Uptime"), value: nil, detail: store.phase.label) {
                         ElapsedText(since: store.connectedSince)
                     }
-                    if store.systemProxy.available {
-                        NativeSystemProxyCard()
-                    }
+                }
+                if store.systemProxy.available {
+                    NativeSystemProxyCard()
+                        .frame(maxWidth: 360, alignment: .leading)
+                        .frame(maxWidth: .infinity, alignment: .leading)
                 }
                 if let group = store.primaryGroup {
                     NativeGroupStrip(group: group)
@@ -327,10 +329,13 @@ private struct NativeSystemProxyCard: View {
                 Image(systemName: "network").foregroundStyle(theme.accent)
             }
         }
+        .toggleStyle(.switch)
         .padding(.horizontal, 16)
         .frame(minHeight: 52)
         .frame(maxHeight: .infinity)
         .background(theme.surface, in: RoundedRectangle(cornerRadius: 20, style: .continuous))
+        .lineLimit(1)
+        .minimumScaleFactor(0.8)
     }
 }
 

@@ -108,6 +108,8 @@ private struct InstrumentDeck: View {
                         }
                         .font(.system(size: 12, design: .monospaced))
                         .foregroundStyle(theme.secondaryText)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.7)
                     }
                     DualTrafficChart(download: store.downlinkHistory, upload: store.uplinkHistory, downloadColor: theme.download, uploadColor: theme.upload, gridColor: .white.opacity(0.06))
                         .frame(height: 180)
@@ -141,8 +143,10 @@ private struct InstrumentDeck: View {
 private struct InstrumentConnectionTable: View {
     @Environment(SkinStore.self) private var store
     @Environment(\.skinTheme) private var theme
-    @State private var selection: SkinConnection.ID?
     @State private var confirmCloseAll = false
+    @State private var width: CGFloat = 800
+
+    private var showsRule: Bool { width > 760 }
 
     var body: some View {
         let rows = store.activeConnections.sorted { $0.downlink + $0.uplink > $1.downlink + $1.uplink }.prefix(40)
@@ -173,6 +177,7 @@ private struct InstrumentConnectionTable: View {
             }
             .background(Color(hex: 0x0E1115), in: RoundedRectangle(cornerRadius: 14, style: .continuous))
             .overlay(RoundedRectangle(cornerRadius: 14, style: .continuous).strokeBorder(theme.separator))
+            .onGeometryChange(for: CGFloat.self) { $0.size.width } action: { width = $0 }
         }
         .navigationDestination(for: String.self) { ConnectionDetailPage(connectionID: $0) }
         .confirmationDialog(SkinL("Close all connections?"), isPresented: $confirmCloseAll, titleVisibility: .visible) {
@@ -184,10 +189,10 @@ private struct InstrumentConnectionTable: View {
     private var header: some View {
         HStack(spacing: 8) {
             Text(skin: "Destination").frame(maxWidth: .infinity, alignment: .leading)
-            Text(skin: "Rule").frame(width: 150, alignment: .leading)
-            Text(skin: "Route").frame(width: 170, alignment: .leading)
-            Text(verbatim: "↓ / ↑").frame(width: 130, alignment: .trailing)
-            Text(skin: "Time").frame(width: 56, alignment: .trailing)
+            if showsRule { Text(skin: "Rule").frame(width: 140, alignment: .leading) }
+            Text(skin: "Route").frame(width: 150, alignment: .leading)
+            Text(verbatim: "↓ / ↑").frame(width: 150, alignment: .trailing)
+            Text(skin: "Time").frame(width: 48, alignment: .trailing)
         }
         .font(.system(size: 11, weight: .semibold))
         .foregroundStyle(theme.secondaryText)
@@ -199,10 +204,12 @@ private struct InstrumentConnectionTable: View {
     private func row(_ connection: SkinConnection) -> some View {
         HStack(spacing: 8) {
             Text(connection.displayDestination).foregroundStyle(theme.text).lineLimit(1).frame(maxWidth: .infinity, alignment: .leading)
-            Text(connection.rule.components(separatedBy: "=>").first ?? "").foregroundStyle(theme.secondaryText).lineLimit(1).frame(width: 150, alignment: .leading)
-            Text(connection.isDirect ? SkinL("Direct") : connection.route.joined(separator: " → ")).foregroundStyle(connection.isDirect ? theme.secondaryText : theme.accent).lineLimit(1).frame(width: 170, alignment: .leading)
-            Text(verbatim: "\(SkinFormat.rate(connection.downlink)) / \(SkinFormat.rate(connection.uplink))").foregroundStyle(theme.text.opacity(0.85)).frame(width: 130, alignment: .trailing)
-            Text(connection.createdAt, style: .timer).foregroundStyle(theme.secondaryText).frame(width: 56, alignment: .trailing)
+            if showsRule {
+                Text(connection.ruleSummary).foregroundStyle(theme.secondaryText).lineLimit(1).frame(width: 140, alignment: .leading)
+            }
+            Text(connection.isDirect ? SkinL("Direct") : connection.outbound).foregroundStyle(connection.isDirect ? theme.secondaryText : theme.accent).lineLimit(1).frame(width: 150, alignment: .leading)
+            Text(verbatim: "\(SkinFormat.rate(connection.downlink)) / \(SkinFormat.rate(connection.uplink))").foregroundStyle(theme.text.opacity(0.85)).lineLimit(1).minimumScaleFactor(0.7).frame(width: 150, alignment: .trailing)
+            Text(verbatim: SkinFormat.duration(Date().timeIntervalSince(connection.createdAt))).foregroundStyle(theme.secondaryText).lineLimit(1).frame(width: 48, alignment: .trailing)
         }
         .font(.system(size: 12, design: .monospaced))
         .padding(.horizontal, 14)

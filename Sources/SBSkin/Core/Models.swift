@@ -223,6 +223,14 @@ public struct SkinConnection: Sendable, Equatable, Identifiable, Hashable {
         chain.isEmpty ? [outbound] : chain.reversed()
     }
 
+    /// Short form of the matched rule: `rule_set=geosite-github => route(Proxy)` → `geosite-github`.
+    public var ruleSummary: String {
+        let condition = rule.components(separatedBy: "=>").first?.trimmingCharacters(in: .whitespaces) ?? ""
+        guard !condition.isEmpty else { return "" }
+        let value = condition.split(separator: "=", maxSplits: 1).last.map(String.init) ?? condition
+        return value.trimmingCharacters(in: CharacterSet(charactersIn: "[] "))
+    }
+
     static func stripPort(_ address: String) -> String {
         if address.hasPrefix("["), let end = address.firstIndex(of: "]") {
             return String(address[address.index(after: address.startIndex) ..< end])

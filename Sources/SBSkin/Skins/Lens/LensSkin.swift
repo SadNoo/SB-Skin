@@ -65,6 +65,7 @@ private struct LensCompact: View {
 
 /// “Today”: split of proxied vs direct bytes, what's happening now, and per-exit totals.
 struct LensToday: View {
+    @Environment(\.horizontalSizeClass) private var sizeClass
     @Environment(SkinStore.self) private var store
     @Environment(SkinRouter.self) private var router
     @Environment(SkinPreferences.self) private var preferences
@@ -101,8 +102,10 @@ struct LensToday: View {
         .background(theme.background)
         .navigationTitle(SkinL("Today"))
         .toolbar {
-            ToolbarItem(placement: .primaryAction) {
-                LensPowerPill()
+            if sizeClass != .regular {
+                ToolbarItem(placement: .primaryAction) {
+                    LensPowerPill()
+                }
             }
         }
         .safeAreaInset(edge: .top, spacing: 0) {
@@ -259,11 +262,8 @@ struct LensConnectionRow: View {
     }
 
     private var ruleSummary: String {
-        let condition = connection.rule.components(separatedBy: "=>").first?.trimmingCharacters(in: .whitespaces) ?? ""
-        guard !condition.isEmpty else { return SkinL("Default route") }
-        // `rule_set=geosite-github` reads better as just `geosite-github`.
-        let value = condition.split(separator: "=", maxSplits: 1).last.map(String.init) ?? condition
-        return SkinL("Matched %@", value.trimmingCharacters(in: CharacterSet(charactersIn: "[] ")))
+        let summary = connection.ruleSummary
+        return summary.isEmpty ? SkinL("Default route") : SkinL("Matched %@", summary)
     }
 }
 

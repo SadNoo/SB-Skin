@@ -8,6 +8,7 @@ import SwiftUI
 ///   -sbskin-skin <native|instrument|focus|places|lens|sentence|radio|bento>
 ///   -sbskin-scenario <live|frozen|stopped|empty>
 ///   -sbskin-onboarding          show the first-launch picker again
+///   -sbskin-snapshot <file.png> (macOS) render the window into a PNG after a few seconds
 @main
 struct DemoApp: App {
     @State private var session = DemoApp.makeSession()
@@ -15,6 +16,9 @@ struct DemoApp: App {
     var body: some Scene {
         WindowGroup {
             SkinRootView(session: session)
+                #if os(macOS)
+                .task { await DemoSnapshot.writeIfRequested() }
+                #endif
         }
         #if os(macOS)
         .defaultSize(width: 1280, height: 820)
@@ -71,3 +75,23 @@ private struct DemoHostPage: View {
         .navigationTitle(title)
     }
 }
+
+#if os(macOS)
+    import AppKit
+
+    /// Screenshot helper for documentation: the app renders its own window, so no screen
+    /// recording permission is needed.
+    enum DemoSnapshot {
+        @MainActor
+        static func writeIfRequested() async {
+            let arguments = ProcessInfo.processInfo.arguments
+            guard let index = arguments.firstIndex(of: "-sbskin-snapshot"), arguments.indices.contains(index + 1) else { return }
+            let path = arguments[index + 1]
+            try? await Task.sleep(for: .seconds(4))
+            guard let view = NSApp.windows.first(where: \.isVisible)?.contentView,
+                  let rep = view.bitmapImageRepForCachingDisplay(in: view.bounds) else { return }
+            view.cacheDisplay(in: view.bounds, to: rep)
+            try? rep.representation(using: .png, properties: [:])?.write(to: URL(fileURLWithPath: path))
+        }
+    }
+#endif

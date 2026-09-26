@@ -208,6 +208,7 @@ private struct PlacesCard: View {
                         ForEach(store.clashModes, id: \.self) { Text(preferences.vocabulary.modeShort($0)).tag($0) }
                     }
                     .pickerStyle(.segmented)
+                    .labelsHidden()
                     .padding(.top, 10)
                 }
                 HStack {
@@ -379,12 +380,16 @@ private struct PlacesRow: View {
                     Text(SkinRegion.stripFlag(item.tag))
                         .font(.system(.body, design: .rounded).weight(selected ? .heavy : .medium))
                         .foregroundStyle(theme.text)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.8)
                     Text(item.type).font(.caption).foregroundStyle(theme.secondaryText)
                 }
                 Spacer()
                 Text(item.grade.word)
                     .font(.system(.footnote, design: .rounded).weight(.semibold))
                     .foregroundStyle(item.grade.color)
+                    .lineLimit(1)
+                    .fixedSize()
                 SignalBars(grade: item.grade)
             }
             .contentShape(Rectangle())
@@ -447,10 +452,15 @@ private struct PlacesRegular: View {
     var body: some View {
         ZStack {
             theme.background.ignoresSafeArea()
-            PlacesMap(span: 330, centerOverride: (18, 40))
-                .ignoresSafeArea()
-                .padding(.leading, 300)
-                .opacity(store.isRunning ? 1 : 0.55)
+            GeometryReader { proxy in
+                // Wide enough to show neighbours, zoomed enough for readable dots.
+                let span = min(220, max(120, Double(proxy.size.width) / 6))
+                PlacesMap(span: span)
+                    .padding(.leading, 330)
+                    .padding(.bottom, 110)
+            }
+            .ignoresSafeArea()
+            .opacity(store.isRunning ? 1 : 0.55)
             HStack(alignment: .top, spacing: 0) {
                 NavigationStack {
                     PlacesPicker(embedded: true)
@@ -476,6 +486,7 @@ private struct PlacesRegular: View {
                                 ForEach(store.clashModes, id: \.self) { Text(preferences.vocabulary.modeShort($0)).tag($0) }
                             }
                             .pickerStyle(.segmented)
+                            .labelsHidden()
                             .fixedSize()
                             .padding(6)
                             .glassEffect(.regular, in: Capsule())
@@ -497,9 +508,18 @@ private struct PlacesStatusBar: View {
     @Environment(\.skinTheme) private var theme
 
     var body: some View {
+        ViewThatFits(in: .horizontal) {
+            bar(showsStats: true)
+            bar(showsStats: false)
+        }
+        .frame(maxWidth: 1000)
+        .glassEffect(.regular, in: RoundedRectangle(cornerRadius: 24, style: .continuous))
+    }
+
+    private func bar(showsStats: Bool) -> some View {
         let node = store.currentNode
         let grade = node?.grade ?? .untested
-        HStack(spacing: 28) {
+        return HStack(spacing: 28) {
             VStack(alignment: .leading, spacing: 2) {
                 Text(store.isRunning ? SkinL("You're going through") : store.phase.label).font(.caption.weight(.semibold)).foregroundStyle(theme.secondaryText)
                 HStack(alignment: .firstTextBaseline, spacing: 8) {
@@ -509,7 +529,7 @@ private struct PlacesStatusBar: View {
                     }
                 }
             }
-            if store.isRunning {
+            if store.isRunning, showsStats {
                 Divider().frame(height: 40)
                 stat(SkinL("Now"), "↓ \(SkinFormat.rate(store.status.downlink))  ↑ \(SkinFormat.rate(store.status.uplink))")
                 stat(SkinL("This session"), SkinFormat.bytes(store.status.totalTraffic))
@@ -530,8 +550,7 @@ private struct PlacesStatusBar: View {
         }
         .padding(.horizontal, 24)
         .frame(height: 84)
-        .frame(maxWidth: 1000)
-        .glassEffect(.regular, in: RoundedRectangle(cornerRadius: 24, style: .continuous))
+        .fixedSize(horizontal: true, vertical: false)
     }
 
     private func stat(_ title: String, _ value: String) -> some View {
