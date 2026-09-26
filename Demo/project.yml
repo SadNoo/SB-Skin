@@ -32,6 +32,7 @@ targets:
       path: App/Info.plist
       properties:
         CFBundleDisplayName: Skin Demo
+        CFBundleLocalizations: [en, zh-Hans, zh-Hant]
         CFBundleShortVersionString: $(MARKETING_VERSION)
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         UILaunchScreen: {}
