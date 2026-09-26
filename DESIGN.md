@@ -44,8 +44,8 @@ room for something, it links to a shared page.
   run Live Activities and widget snapshots, alternate icons, and the host pages. The host pages
   are closures that return the upstream Profiles, Tools, Settings and Remote Control views.
 - **SkinPreferences** hold the skin, onboarding state, wording, color mode, icon choice, Bento
-  layout, log level and Radio band. They live in the app's own defaults, and optionally in
-  iCloud key-value storage.
+  layout, log level and Radio band. They live in the app's own defaults and are never synced,
+  so devices running different SB-Skin versions (with different skin sets) never conflict.
 
 ## Themes
 

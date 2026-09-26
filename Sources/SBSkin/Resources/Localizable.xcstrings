@@ -3777,22 +3777,6 @@
         }
       }
     },
-    "Sync Skin Across Devices": {
-      "localizations": {
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "在设备间同步皮肤"
-          }
-        },
-        "zh-Hant": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "在裝置間同步皮膚"
-          }
-        }
-      }
-    },
     "System Proxy": {
       "localizations": {
         "zh-Hans": {

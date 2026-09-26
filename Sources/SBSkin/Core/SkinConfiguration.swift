@@ -14,9 +14,6 @@ public struct SkinConfiguration {
     /// Alternate app icon names per skin (optional). When empty the “App icon follows skin”
     /// setting is hidden.
     public var alternateIcons: [SkinID: String]
-    /// Sync the chosen skin across devices with iCloud key-value storage. Requires the
-    /// `com.apple.developer.ubiquity-kvstore-identifier` entitlement in the host.
-    public var syncWithICloud: Bool
     /// Drive a Live Activity while the service runs (iOS). Requires `NSSupportsLiveActivities`.
     public var liveActivities: Bool
     /// Write a snapshot to the App Group so widgets can render.
@@ -28,7 +25,6 @@ public struct SkinConfiguration {
         appName: String = SkinConfiguration.bundleDisplayName,
         deepLinkScheme: String? = nil,
         alternateIcons: [SkinID: String] = [:],
-        syncWithICloud: Bool = false,
         liveActivities: Bool = true,
         widgetSnapshots: Bool = true,
         hostPages: SkinHostPages = SkinHostPages()
@@ -36,7 +32,6 @@ public struct SkinConfiguration {
         self.appName = appName
         self.deepLinkScheme = deepLinkScheme
         self.alternateIcons = alternateIcons
-        self.syncWithICloud = syncWithICloud
         self.liveActivities = liveActivities
         self.widgetSnapshots = widgetSnapshots
         self.hostPages = hostPages

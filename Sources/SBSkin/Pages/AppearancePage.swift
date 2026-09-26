@@ -49,11 +49,6 @@ struct AppearancePage: View {
                         Toggle(SkinL("App Icon Follows Skin"), isOn: $preferences.iconFollowsSkin)
                             .padding(.horizontal, 16).frame(minHeight: 48)
                     }
-                    if configuration.syncWithICloud {
-                        divider
-                        Toggle(SkinL("Sync Skin Across Devices"), isOn: $preferences.syncAcrossDevices)
-                            .padding(.horizontal, 16).frame(minHeight: 48)
-                    }
                 }
                 .foregroundStyle(theme.text)
                 .background(theme.surface, in: RoundedRectangle(cornerRadius: theme.cornerRadius, style: .continuous))

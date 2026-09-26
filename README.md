@@ -38,7 +38,8 @@ All skins share these:
 - **Command palette (⌘K).** Switch skins with ⌃⌘S.
 - **Wording.** Choose everyday words ("Smart routing", "Very fast") or technical terms
   ("Rule", "186 ms").
-- **Sync.** Your skin choice can follow you across devices through iCloud.
+- **Per device.** Each device remembers its own skin; nothing is synced, so devices on
+  different SB-Skin versions never conflict.
 - **App icon.** An optional alternate app icon can follow the skin.
 - **Widgets and Live Activity.** Home Screen and Lock Screen widgets, a Live Activity and
   the Dynamic Island.

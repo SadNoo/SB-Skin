@@ -23,9 +23,6 @@ public final class SkinSession {
         self.preferences = preferences
         router = SkinRouter()
         self.configuration = configuration
-        if configuration.syncWithICloud {
-            preferences.enableCloudSync()
-        }
     }
 
     /// Forward URLs the host receives. Returns true when the URL was a skin deep link.

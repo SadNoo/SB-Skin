@@ -74,18 +74,6 @@ macOS build. Signing, bundle IDs and App Groups are configured the same way as u
   `<first CFBundleURLSchemes entry>://sbskin/<home|nodes|activity|start|stop|toggle>`.
   `SkinIntegration.handle` consumes these links. Every other URL still reaches the upstream
   handler.
-- **Skin sync across devices (optional).** "Sync Skin Across Devices" uses iCloud key-value
-  storage. Upstream does not have that entitlement, so the script leaves signing alone. To
-  enable sync, add this to `SFI/SFI.entitlements`, `SFM/SFM.entitlements` and
-  `SFM.System/SFM.entitlements`:
-
-  ```xml
-  <key>com.apple.developer.ubiquity-kvstore-identifier</key>
-  <string>$(TeamIdentifierPrefix)$(BASE_PACKAGE_IDENTIFIER)</string>
-  ```
-
-  Use the same identifier on every platform so iPhone, iPad and Mac share the value. Without
-  the entitlement, the choice stays per device.
 - **Alternate app icons (optional).** Nothing ships yet, because the name and icon are still
   undecided. To add them:
   1. Add alternate icon sets to the app's asset catalog.
