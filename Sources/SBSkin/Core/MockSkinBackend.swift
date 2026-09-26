@@ -63,8 +63,8 @@ public final class MockSkinBackend: SkinBackend {
         pushAll()
         store.appendLogs(Self.backlog, reset: true)
         store.apply(defaultLogLevel: .info)
-        if scenario == .frozen {
-            // Fill the traffic history so charts have shape without a timer.
+        if scenario == .frozen || scenario == .live {
+            // Fill the traffic history so charts have shape from the first frame.
             for index in 0 ..< SkinStore.historyLength {
                 let wave = sin(Double(index) / 5) * 0.35 + 0.65
                 downlink = 19_503_513 * wave * random.double(in: 0.8 ... 1.1)

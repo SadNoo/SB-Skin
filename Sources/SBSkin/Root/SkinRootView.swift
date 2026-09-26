@@ -108,7 +108,7 @@ struct SkinCanvas: View {
             .environment(\.skinTheme, theme)
             .environment(\.colorScheme, theme.forcedColorScheme ?? colorScheme)
             .tint(theme.accent)
-            .fontDesign(theme.textDesign)
+            .fontDesign(theme.textDesign == .default ? nil : theme.textDesign)
             .background(theme.background.ignoresSafeArea())
     }
 
