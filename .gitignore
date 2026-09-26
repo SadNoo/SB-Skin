@@ -1,0 +1,14 @@
+# Upstream reference checkout (not part of this project)
+/upstream/
+
+# Swift / Xcode
+.build/
+.swiftpm/
+DerivedData/
+*.xcuserstate
+xcuserdata/
+*.xcscmblueprint
+/build/
+
+# macOS
+.DS_Store
