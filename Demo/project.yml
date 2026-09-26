@@ -1,0 +1,65 @@
+name: SBSkinDemo
+options:
+  bundleIdPrefix: io.github.sadnoo.sbskin
+  deploymentTarget:
+    iOS: "26.0"
+    macOS: "26.0"
+  createIntermediateGroups: true
+packages:
+  SBSkin:
+    path: ..
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    MARKETING_VERSION: "1.0"
+    CURRENT_PROJECT_VERSION: "1"
+    CODE_SIGN_STYLE: Automatic
+    CODE_SIGN_IDENTITY: "-"
+    DEVELOPMENT_TEAM: ""
+targets:
+  SBSkinDemo:
+    type: application
+    supportedDestinations: [iOS, macOS]
+    sources: [App]
+    dependencies:
+      - package: SBSkin
+        product: SBSkin
+      - target: SBSkinDemoWidgets
+        destinationFilters: [iOS]
+    info:
+      path: App/Info.plist
+      properties:
+        CFBundleDisplayName: Skin Demo
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        UILaunchScreen: {}
+        NSSupportsLiveActivities: true
+        UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait, UIInterfaceOrientationLandscapeLeft, UIInterfaceOrientationLandscapeRight]
+        UISupportedInterfaceOrientations~ipad: [UIInterfaceOrientationPortrait, UIInterfaceOrientationPortraitUpsideDown, UIInterfaceOrientationLandscapeLeft, UIInterfaceOrientationLandscapeRight]
+        CFBundleURLTypes:
+          - CFBundleURLName: io.github.sadnoo.sbskin.demo
+            CFBundleURLSchemes: [sbskindemo]
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: io.github.sadnoo.sbskin.demo
+        TARGETED_DEVICE_FAMILY: "1,2"
+        ENABLE_HARDENED_RUNTIME: NO
+  SBSkinDemoWidgets:
+    type: app-extension
+    platform: iOS
+    sources: [Widgets]
+    dependencies:
+      - package: SBSkin
+        product: SBSkinWidgets
+    info:
+      path: Widgets/Info.plist
+      properties:
+        CFBundleDisplayName: Skin Demo Widgets
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.widgetkit-extension
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: io.github.sadnoo.sbskin.demo.widgets
+        TARGETED_DEVICE_FAMILY: "1,2"
