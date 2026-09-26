@@ -74,7 +74,7 @@ struct LensToday: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 14) {
-                if !store.hasProfiles {
+                if store.needsGate {
                     NoProfileView()
                 } else if store.isRunning {
                     LensSplitCard()

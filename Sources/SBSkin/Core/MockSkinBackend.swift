@@ -175,6 +175,17 @@ public final class MockSkinBackend: SkinBackend {
 
     public func clearLogs() async throws {}
 
+    public func performSetup(_ requirement: SkinSetupRequirement) async throws {
+        try await Task.sleep(for: .milliseconds(500))
+        store?.apply(setupRequirement: nil)
+        phase = .stopped
+        pushPhase()
+    }
+
+    public func disconnectRemote() {
+        store?.apply(remoteName: nil)
+    }
+
     public func setConnectionsSubscribed(_ subscribed: Bool) {}
 
     public func setLogsSubscribed(_ subscribed: Bool) {

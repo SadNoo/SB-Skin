@@ -58,6 +58,13 @@ public final class SkinStore {
 
     public private(set) var systemProxy = SkinSystemProxy()
 
+    // MARK: Setup & remote
+
+    public private(set) var setupRequirement: SkinSetupRequirement?
+    public private(set) var isPerformingSetup = false
+    /// Name of the remote device being controlled, if any.
+    public private(set) var remoteName: String?
+
     // MARK: Misc
 
     public var alert: SkinAlert?
@@ -126,7 +133,10 @@ public final class SkinStore {
         return (proxied, direct)
     }
 
-    public var hasProfiles: Bool { !profiles.isEmpty }
+    public var hasProfiles: Bool { !profiles.isEmpty || remoteName != nil }
+
+    /// True when a skin should show the shared setup / first-profile card instead of controls.
+    public var needsGate: Bool { !hasProfiles || setupRequirement != nil }
 
     // MARK: - Actions
 
@@ -139,6 +149,10 @@ public final class SkinStore {
     }
 
     public func startService() {
+        if setupRequirement != nil {
+            performSetup()
+            return
+        }
         guard phase == .stopped else { return }
         phase = .starting
         run(SkinL("Start service")) { try await $0.startService() } onFailure: { store in
@@ -147,6 +161,10 @@ public final class SkinStore {
     }
 
     public func stopService() {
+        if remoteName != nil {
+            disconnectRemote()
+            return
+        }
         guard phase.isActive else { return }
         phase = .stopping
         run(SkinL("Stop service")) { try await $0.stopService() }
@@ -223,6 +241,18 @@ public final class SkinStore {
     public func clearLogs() {
         logs.removeAll()
         run(SkinL("Clear logs")) { try await $0.clearLogs() }
+    }
+
+    public func performSetup() {
+        guard let requirement = setupRequirement, !isPerformingSetup else { return }
+        isPerformingSetup = true
+        run(requirement.title) { try await $0.performSetup(requirement) } always: { store in
+            store.isPerformingSetup = false
+        }
+    }
+
+    public func disconnectRemote() {
+        backend.disconnectRemote()
     }
 
     // MARK: Subscriptions
@@ -333,6 +363,14 @@ public final class SkinStore {
     public func apply(profiles newProfiles: [SkinProfile], selected: Int64?) {
         if profiles != newProfiles { profiles = newProfiles }
         if !isSwitchingProfile, selectedProfileID != selected { selectedProfileID = selected }
+    }
+
+    public func apply(setupRequirement requirement: SkinSetupRequirement?) {
+        if setupRequirement != requirement { setupRequirement = requirement }
+    }
+
+    public func apply(remoteName name: String?) {
+        if remoteName != name { remoteName = name }
     }
 
     public func apply(systemProxy newValue: SkinSystemProxy) {

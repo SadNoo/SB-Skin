@@ -154,6 +154,7 @@ private struct SentenceNow: View {
 
     private var headline: String {
         guard store.hasProfiles else { return SkinL("Nothing set up yet.") }
+        if store.setupRequirement != nil { return SkinL("One more step.") }
         switch store.phase {
         case .running:
             let grade = store.currentNode?.grade ?? .good
@@ -167,7 +168,7 @@ private struct SentenceNow: View {
     }
 
     private var sentence: AttributedString {
-        if !store.hasProfiles {
+        if store.needsGate {
             return SentenceBuilder.build(SkinL("Add a profile in %1$@ to begin."), tokens: [(SkinL("Settings"), "settings")])
         }
         if store.isRunning {
@@ -191,6 +192,7 @@ private struct SentenceNow: View {
         case "mode": choosingMode = true
         case "start": store.startService()
         case "settings": router.sheet = .more
+        case "setup": store.performSetup()
         default: break
         }
         return .handled

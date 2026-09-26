@@ -39,6 +39,11 @@ public protocol SkinBackend: AnyObject {
 
     func clearLogs() async throws
 
+    /// Resolves a ``SkinSetupRequirement`` the backend reported.
+    func performSetup(_ requirement: SkinSetupRequirement) async throws
+    /// Leaves remote-control mode and returns to this device.
+    func disconnectRemote()
+
     /// Connection tracking is a separate subscription upstream; only keep it open while a
     /// page that shows connections is on screen.
     func setConnectionsSubscribed(_ subscribed: Bool)

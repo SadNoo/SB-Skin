@@ -179,7 +179,7 @@ private struct PlacesCard: View {
         let node = store.currentNode
         let grade = node?.grade ?? .untested
         VStack(alignment: .leading, spacing: 6) {
-            if !store.hasProfiles {
+            if store.needsGate {
                 NoProfileView()
             } else if store.isRunning {
                 Text(skin: "You're going through").font(.system(.footnote, design: .rounded).weight(.semibold)).foregroundStyle(theme.secondaryText)

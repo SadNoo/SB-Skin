@@ -326,3 +326,26 @@ public struct SkinAlert: Identifiable, Sendable, Equatable {
         self.message = message
     }
 }
+
+/// Something the system needs before the service can run. Mirrors the install buttons the
+/// upstream dashboard shows.
+public enum SkinSetupRequirement: Sendable, Equatable {
+    /// iOS / macOS App Store build: the VPN configuration is not installed yet.
+    case installNetworkExtension
+    /// macOS standalone build: the system extension is not installed yet.
+    case installSystemExtension
+
+    var title: String {
+        switch self {
+        case .installNetworkExtension: SkinL("Install Network Extension")
+        case .installSystemExtension: SkinL("Install System Extension")
+        }
+    }
+
+    var message: String {
+        switch self {
+        case .installNetworkExtension: SkinL("The system will ask you to allow adding a VPN configuration.")
+        case .installSystemExtension: SkinL("The system will ask you to allow the extension in System Settings.")
+        }
+    }
+}

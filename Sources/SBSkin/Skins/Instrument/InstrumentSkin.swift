@@ -106,7 +106,7 @@ struct InstrumentHome: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 18) {
                 header
-                if !store.hasProfiles {
+                if store.needsGate {
                     NoProfileView()
                 } else if store.isRunning {
                     hero

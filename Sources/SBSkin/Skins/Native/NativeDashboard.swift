@@ -13,7 +13,7 @@ struct NativeDashboard: View {
     var body: some View {
         ScrollView {
             Group {
-                if !store.hasProfiles {
+                if store.needsGate {
                     NoProfileView()
                 } else if sizeClass == .regular {
                     regular
@@ -438,28 +438,53 @@ private struct NativeGroupStrip: View {
     }
 }
 
-/// Shown by every skin when no profile exists yet.
+/// Shown by every skin when there is no profile yet, or the system extension / VPN
+/// configuration still has to be installed.
 struct NoProfileView: View {
+    @Environment(SkinStore.self) private var store
     @Environment(\.skinConfiguration) private var configuration
     @Environment(\.skinTheme) private var theme
 
     var body: some View {
         VStack(spacing: 16) {
-            ContentUnavailableView {
-                Label(SkinL("No profile yet"), systemImage: "doc.badge.plus")
-            } description: {
-                Text(skin: "Create a profile or import one from a link, a file or a QR code to get started.")
-            }
-            if let profiles = configuration.hostPages.profiles {
-                NavigationLink {
-                    profiles()
+            if let requirement = store.setupRequirement, store.hasProfiles {
+                ContentUnavailableView {
+                    Label(requirement.title, systemImage: "lock.shield")
+                } description: {
+                    Text(requirement.message)
+                }
+                Button {
+                    store.performSetup()
                 } label: {
-                    Text(skin: "New Profile")
-                        .font(.headline)
-                        .padding(.horizontal, 24)
-                        .frame(height: 48)
+                    Group {
+                        if store.isPerformingSetup {
+                            ProgressView()
+                        } else {
+                            Text(requirement.title).font(.headline)
+                        }
+                    }
+                    .padding(.horizontal, 24)
+                    .frame(height: 48)
                 }
                 .buttonStyle(.glassProminent)
+                .disabled(store.isPerformingSetup)
+            } else {
+                ContentUnavailableView {
+                    Label(SkinL("No profile yet"), systemImage: "doc.badge.plus")
+                } description: {
+                    Text(skin: "Create a profile or import one from a link, a file or a QR code to get started.")
+                }
+                if let profiles = configuration.hostPages.profiles {
+                    NavigationLink {
+                        profiles()
+                    } label: {
+                        Text(skin: "New Profile")
+                            .font(.headline)
+                            .padding(.horizontal, 24)
+                            .frame(height: 48)
+                    }
+                    .buttonStyle(.glassProminent)
+                }
             }
         }
         .frame(maxWidth: .infinity)

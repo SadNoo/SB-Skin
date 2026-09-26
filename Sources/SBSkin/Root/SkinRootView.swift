@@ -35,6 +35,12 @@ public struct SkinRootView: View {
                         .environment(\.skinTheme, theme)
                 }
             }
+            .safeAreaInset(edge: .top, spacing: 0) {
+                if let remote = store.remoteName {
+                    RemoteBanner(name: remote)
+                        .environment(\.skinTheme, theme)
+                }
+            }
             .background { keyboardShortcuts }
             .alert(
                 store.alert?.title ?? "",
@@ -94,6 +100,30 @@ public struct SkinRootView: View {
         }
         .opacity(0)
         .accessibilityHidden(true)
+    }
+}
+
+/// Shown on top of every skin while controlling another device.
+private struct RemoteBanner: View {
+    @Environment(SkinStore.self) private var store
+    @Environment(\.skinTheme) private var theme
+    let name: String
+
+    var body: some View {
+        HStack(spacing: 10) {
+            Image(systemName: "antenna.radiowaves.left.and.right")
+            Text(SkinL("Controlling %@", name)).lineLimit(1)
+            Spacer()
+            Button(SkinL("Disconnect")) { store.disconnectRemote() }
+                .buttonStyle(.bordered)
+                .controlSize(.small)
+        }
+        .font(.subheadline.weight(.semibold))
+        .padding(.horizontal, 16)
+        .padding(.vertical, 8)
+        .glassEffect(.regular.tint(theme.accent.opacity(0.2)), in: Capsule())
+        .padding(.horizontal, 12)
+        .padding(.top, 4)
     }
 }
 

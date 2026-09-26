@@ -79,7 +79,7 @@ struct FocusHome: View {
                 .padding(.top, 8)
             }
             Spacer(minLength: 12)
-            if store.hasProfiles {
+            if !store.needsGate {
                 FocusPowerButton()
                 VStack(spacing: 4) {
                     Text(store.phase.label)

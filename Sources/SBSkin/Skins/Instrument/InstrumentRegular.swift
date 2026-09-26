@@ -94,7 +94,7 @@ private struct InstrumentDeck: View {
                         .background(theme.accent.opacity(0.12), in: Capsule())
                     }
                 }
-                if !store.hasProfiles {
+                if store.needsGate {
                     NoProfileView()
                 } else if store.isRunning {
                     HStack(alignment: .bottom, spacing: 40) {

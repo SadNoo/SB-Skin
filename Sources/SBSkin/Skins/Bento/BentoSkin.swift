@@ -165,7 +165,7 @@ struct BentoHome: View {
                     }
                     .buttonStyle(.plain)
                 }
-                if !store.hasProfiles {
+                if store.needsGate {
                     NoProfileView()
                 } else {
                     BentoFlowGrid(modules: modules, columns: effectiveColumns, editing: editing)
