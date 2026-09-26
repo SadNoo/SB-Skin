@@ -267,7 +267,10 @@ def patch_project(apple, local_path, url, branch):
     # Package reference.
     package_id = project.new_id()
     if local_path:
-        relative = os.path.relpath(os.path.abspath(local_path), apple)
+        target = os.path.realpath(local_path)
+        relative = os.path.relpath(target, os.path.realpath(apple))
+        if relative.count("..") > 3:
+            relative = target  # far apart: an absolute path is clearer
         project.add_to_section(
             "XCLocalSwiftPackageReference",
             f'\t\t{package_id} /* XCLocalSwiftPackageReference "{MARK}" */ = {{\n'
