@@ -49,6 +49,38 @@
         }
       }
     },
+    "Calm as a page of paper": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "像一页纸一样安静"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "像一頁紙一樣安靜"
+          }
+        }
+      }
+    },
+    "Corner Store": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "便利店"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "便利店"
+          }
+        }
+      }
+    },
     "Direct": {
       "localizations": {
         "zh-Hans": {
@@ -61,6 +93,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "直連"
+          }
+        }
+      }
+    },
+    "E-Ink": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "墨水屏"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "墨水屏"
           }
         }
       }
@@ -321,6 +369,22 @@
         }
       }
     },
+    "People who like quiet, readable screens": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "喜欢安静、易读屏幕的人"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "喜歡安靜、易讀螢幕的人"
+          }
+        }
+      }
+    },
     "People who love tactile hardware": {
       "localizations": {
         "zh-Hans": {
@@ -353,6 +417,22 @@
         }
       }
     },
+    "People who want it fun and friendly": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "想要轻松好玩的人"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "想要輕鬆好玩的人"
+          }
+        }
+      }
+    },
     "People who want it stable and familiar": {
       "localizations": {
         "zh-Hans": {
@@ -381,6 +461,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "想弄懂分流規則的人"
+          }
+        }
+      }
+    },
+    "Pick a node like picking a snack": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "挑节点就像挑零食"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "挑節點就像挑零食"
           }
         }
       }

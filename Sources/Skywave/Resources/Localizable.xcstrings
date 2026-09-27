@@ -1,6 +1,38 @@
 {
   "sourceLanguage": "en",
   "strings": {
+    "  delivered by %@": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "  由 %@ 配送"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "  由 %@ 配送"
+          }
+        }
+      }
+    },
+    "  self pickup (direct)": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "  到店自取（直连）"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "  到店自取（直連）"
+          }
+        }
+      }
+    },
     "%1$@ went through %2$@.": {
       "localizations": {
         "zh-Hans": {
@@ -129,6 +161,22 @@
         }
       }
     },
+    "*** RECEIPT ***": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "*** 购物小票 ***"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "*** 購物小票 ***"
+          }
+        }
+      }
+    },
     "Actions": {
       "localizations": {
         "zh-Hans": {
@@ -221,6 +269,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "非洲"
+          }
+        }
+      }
+    },
+    "Aisles": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "货架"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "貨架"
           }
         }
       }
@@ -513,6 +577,22 @@
         }
       }
     },
+    "CLOSED": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "已打烊"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "已打烊"
+          }
+        }
+      }
+    },
     "Cancel": {
       "localizations": {
         "zh-Hans": {
@@ -593,6 +673,22 @@
         }
       }
     },
+    "Check prices": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "查价格"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "查價格"
+          }
+        }
+      }
+    },
     "Check roads": {
       "localizations": {
         "zh-Hans": {
@@ -605,6 +701,38 @@
           "stringUnit": {
             "state": "translated",
             "value": "測一下路況"
+          }
+        }
+      }
+    },
+    "Checking prices…": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "正在查价…"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "正在查價…"
+          }
+        }
+      }
+    },
+    "Checkout speed": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "收银速度"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "收銀速度"
           }
         }
       }
@@ -797,6 +925,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "關閉連線"
+          }
+        }
+      }
+    },
+    "Close the store": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "打烊"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "打烊"
           }
         }
       }
@@ -1121,6 +1265,22 @@
         }
       }
     },
+    "Customers": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "客流"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "客流"
+          }
+        }
+      }
+    },
     "DIRECT": {
       "localizations": {
         "zh-Hans": {
@@ -1181,6 +1341,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "預設路由"
+          }
+        }
+      }
+    },
+    "Deliver all": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "全部配送"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "全部配送"
           }
         }
       }
@@ -1617,6 +1793,22 @@
         }
       }
     },
+    "How to get it": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "取货方式"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "取貨方式"
+          }
+        }
+      }
+    },
     "In %lld · Out %lld": {
       "localizations": {
         "zh-Hans": {
@@ -1821,6 +2013,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "服務執行時會顯示日誌。"
+          }
+        }
+      }
+    },
+    "MEMBER": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "会员卡"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "會員卡"
           }
         }
       }
@@ -2033,6 +2241,22 @@
         }
       }
     },
+    "Next ›": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "下一页 ›"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "下一頁 ›"
+          }
+        }
+      }
+    },
     "No Profile": {
       "localizations": {
         "zh-Hans": {
@@ -2125,6 +2349,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "沒有出站分組"
+          }
+        }
+      }
+    },
+    "No price yet": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "待定价"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "待定價"
           }
         }
       }
@@ -2369,6 +2609,22 @@
         }
       }
     },
+    "OPEN": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "营业中"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "營業中"
+          }
+        }
+      }
+    },
     "Oceania": {
       "localizations": {
         "zh-Hans": {
@@ -2465,6 +2721,22 @@
         }
       }
     },
+    "Open 24 hours": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "24 小时营业"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "24 小時營業"
+          }
+        }
+      }
+    },
     "Open connections": {
       "localizations": {
         "zh-Hans": {
@@ -2525,6 +2797,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "開啟出站分組"
+          }
+        }
+      }
+    },
+    "Open the store": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "开门营业"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "開門營業"
           }
         }
       }
@@ -2641,6 +2929,22 @@
         }
       }
     },
+    "Page %lld of %lld": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "第 %lld 页，共 %lld 页"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "第 %lld 頁，共 %lld 頁"
+          }
+        }
+      }
+    },
     "Pause": {
       "localizations": {
         "zh-Hans": {
@@ -2733,6 +3037,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "幫我選最快的"
+          }
+        }
+      }
+    },
+    "Points this session": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "本次积分"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "本次積分"
           }
         }
       }
@@ -2861,6 +3181,38 @@
           "stringUnit": {
             "state": "translated",
             "value": "RECEIPT · %@"
+          }
+        }
+      }
+    },
+    "Reading": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "阅读"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "閱讀"
+          }
+        }
+      }
+    },
+    "Receipt": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "小票"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "小票"
           }
         }
       }
@@ -3329,6 +3681,22 @@
         }
       }
     },
+    "Self pickup": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "到店自取"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "到店自取"
+          }
+        }
+      }
+    },
     "Sent": {
       "localizations": {
         "zh-Hans": {
@@ -3357,6 +3725,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "服務"
+          }
+        }
+      }
+    },
+    "Service Desk": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "服务台"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "服務檯"
           }
         }
       }
@@ -3441,6 +3825,38 @@
         }
       }
     },
+    "Shelf %@ · %@": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "货架 %@ · %@"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "貨架 %@ · %@"
+          }
+        }
+      }
+    },
+    "Shelves are empty": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "货架是空的"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "貨架是空的"
+          }
+        }
+      }
+    },
     "Show": {
       "localizations": {
         "zh-Hans": {
@@ -3489,6 +3905,22 @@
         }
       }
     },
+    "Sold out": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "售罄"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "售罄"
+          }
+        }
+      }
+    },
     "Sort By": {
       "localizations": {
         "zh-Hans": {
@@ -3533,6 +3965,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "速度"
+          }
+        }
+      }
+    },
+    "Staff picks": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "店员推荐"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "店員推薦"
           }
         }
       }
@@ -3697,6 +4145,38 @@
         }
       }
     },
+    "Store": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "店铺"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "店鋪"
+          }
+        }
+      }
+    },
+    "Store announcements (logs)": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "店铺公告（日志）"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "店鋪公告（日誌）"
+          }
+        }
+      }
+    },
     "Streaming": {
       "localizations": {
         "zh-Hans": {
@@ -3821,6 +4301,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "TIMEOUT"
+          }
+        }
+      }
+    },
+    "TOTAL": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "合计"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "合計"
           }
         }
       }
@@ -4017,6 +4513,38 @@
         }
       }
     },
+    "Testing…": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "正在测速…"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "正在測速…"
+          }
+        }
+      }
+    },
+    "Thank you for shopping": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "谢谢惠顾"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "謝謝惠顧"
+          }
+        }
+      }
+    },
     "The network is a bit slow.": {
       "localizations": {
         "zh-Hans": {
@@ -4189,6 +4717,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "今天"
+          }
+        }
+      }
+    },
+    "Today's pick": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "今日推荐"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "今日推薦"
           }
         }
       }
@@ -4749,6 +5293,38 @@
           "stringUnit": {
             "state": "translated",
             "value": "無路由"
+          }
+        }
+      }
+    },
+    "through %@": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "经由 %@"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "經由 %@"
+          }
+        }
+      }
+    },
+    "‹ Previous": {
+      "localizations": {
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "‹ 上一页"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "‹ 上一頁"
           }
         }
       }

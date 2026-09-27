@@ -18,6 +18,10 @@ public enum SkinID: String, CaseIterable, Codable, Sendable, Identifiable, Hasha
     case radio
     /// I · Bento: arrange your own panel.
     case bento
+    /// J · Ink: an e-paper reader, black on paper, turned page by page.
+    case ink
+    /// K · Mart: a corner store where nodes are goods on the shelf.
+    case mart
 
     public var id: String { rawValue }
 
@@ -33,6 +37,8 @@ public enum SkinID: String, CaseIterable, Codable, Sendable, Identifiable, Hasha
         case .sentence: SharedL("One Sentence")
         case .radio: SharedL("Radio")
         case .bento: SharedL("Bento")
+        case .ink: SharedL("E-Ink")
+        case .mart: SharedL("Corner Store")
         }
     }
 
@@ -46,6 +52,8 @@ public enum SkinID: String, CaseIterable, Codable, Sendable, Identifiable, Hasha
         case .sentence: SharedL("The interface almost disappears")
         case .radio: SharedL("A device you can hold in your hand")
         case .bento: SharedL("Your panel, arranged your way")
+        case .ink: SharedL("Calm as a page of paper")
+        case .mart: SharedL("Pick a node like picking a snack")
         }
     }
 
@@ -59,6 +67,8 @@ public enum SkinID: String, CaseIterable, Codable, Sendable, Identifiable, Hasha
         case .sentence: SharedL("People who like calm, beautiful typography")
         case .radio: SharedL("People who love tactile hardware")
         case .bento: SharedL("Tinkerers who want to customize")
+        case .ink: SharedL("People who like quiet, readable screens")
+        case .mart: SharedL("People who want it fun and friendly")
         }
     }
 
@@ -73,6 +83,8 @@ public enum SkinID: String, CaseIterable, Codable, Sendable, Identifiable, Hasha
         case .sentence: Color(red: 0.61, green: 0.17, blue: 0.12)
         case .radio: Color(red: 1.0, green: 0.35, blue: 0.12)
         case .bento: Color(red: 0.84, green: 0.10, blue: 0.13)
+        case .ink: Color(red: 0.13, green: 0.13, blue: 0.13)
+        case .mart: Color(red: 0.88, green: 0.27, blue: 0.17)
         }
     }
 
@@ -87,6 +99,8 @@ public enum SkinID: String, CaseIterable, Codable, Sendable, Identifiable, Hasha
         case .sentence: "text.quote"
         case .radio: "radio"
         case .bento: "square.grid.2x2"
+        case .ink: "book.closed"
+        case .mart: "basket"
         }
     }
 }
