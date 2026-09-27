@@ -1,4 +1,4 @@
-// SB-Skin ⇄ sing-box Apple client: host glue.
+// Skywave ⇄ sing-box Apple client: host glue.
 //
 // `SkinIntegrationRoot` replaces the upstream tab view / split view. Everything around it in
 // the upstream MainView (alerts, global checks, URL handling, remote control restore…) stays.
@@ -8,7 +8,7 @@
 import ApplicationLibrary
 import Foundation
 import Library
-import SBSkin
+import Skywave
 import SwiftUI
 
 @MainActor
@@ -44,6 +44,7 @@ public enum SkinIntegration {
         #endif
         return SkinConfiguration(
             deepLinkScheme: firstURLScheme(),
+            alternateIcons: SkinConfiguration.skywaveAlternateIcons,
             liveActivities: true,
             widgetSnapshots: true,
             hostPages: pages

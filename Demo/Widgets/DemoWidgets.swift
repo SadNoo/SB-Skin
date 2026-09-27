@@ -1,4 +1,4 @@
-import SBSkinWidgets
+import SkywaveWidgets
 import SwiftUI
 import WidgetKit
 

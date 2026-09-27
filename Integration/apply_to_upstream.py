@@ -1,27 +1,29 @@
 #!/usr/bin/env python3
 """
-Wire SB-Skin into a checkout of the sing-box Apple client.
+Wire Skywave into a checkout of the sing-box Apple client.
 
     python3 Integration/apply_to_upstream.py /path/to/sing-box/clients/apple
     python3 Integration/apply_to_upstream.py /path/to/sing-box/clients/apple --local /path/to/SB-Skin
 
 What it does (idempotent; running it twice changes nothing the second time):
 
-1. Copies Integration/Apple/*.swift into <apple>/SFI/SBSkinIntegration/ and
-   <apple>/MacLibrary/SBSkinIntegration/ (both are file-system synchronized groups, so the
+1. Copies Integration/Apple/*.swift into <apple>/SFI/SkywaveIntegration/ and
+   <apple>/MacLibrary/SkywaveIntegration/ (both are file-system synchronized groups, so the
    files join the SFI and MacLibrary targets without project edits).
 2. Patches three upstream Swift files so the skins replace the root navigation:
    - SFI/MainView.swift            (iOS / iPadOS)
    - MacLibrary/MainView.swift     (macOS)
-   - WidgetExtension/ExtensionBundle.swift (adds the SB-Skin widgets and Live Activity)
+   - WidgetExtension/ExtensionBundle.swift (adds the Skywave widgets and Live Activity)
 3. Edits sing-box.xcodeproj/project.pbxproj:
-   - adds the SB-Skin Swift package (GitHub by default, or --local path),
-   - links SBSkin to SFI and MacLibrary, SBSkinWidgets to WidgetExtension,
+   - adds the Skywave Swift package (GitHub by default, or --local path),
+   - links Skywave to SFI and MacLibrary, SkywaveWidgets to WidgetExtension,
    - raises the deployment target of those targets (and the macOS apps) to 26.0.
 4. Enables Live Activities in SFI/Info.plist.
-5. With --app-name NAME, replaces the upstream product name in the app display names and
-   in the few visible literals (Mac window title, Quit menu, menu bar label, VPN server
-   label, Files app domain, Control Center toggle).
+5. Replaces the upstream product name with --app-name (default "Skywave") in the app display
+   names and the few visible literals (Mac window title, Quit menu, menu bar label, VPN
+   server label, Files app domain, Control Center toggle).
+6. Replaces every upstream icon (app, alternates, widget, share extension, Mac app, Mac
+   menu bar) with the Skywave icons from Branding/.
 
 Nothing in the upstream core (Go, Libbox, the network extension) is touched.
 
@@ -37,7 +39,7 @@ import shutil
 import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-MARK = "SB-Skin"
+MARK = "Skywave"
 DEFAULT_URL = "https://github.com/SadNoo/SB-Skin"
 
 INTEGRATION_FILES = ["UpstreamSkinBackend.swift", "SkinIntegration.swift"]
@@ -94,7 +96,7 @@ def patch_ios_main_view(apple):
         fail("SFI/MainView.swift: tabViewContent not found; upstream changed, patch by hand (see INTEGRATION.md)")
     text = text.replace(
         anchor,
-        "    // SB-Skin: the skins replace the upstream tab view.\n"
+        "    // Skywave: the skins replace the upstream tab view.\n"
         "    private var tabViewContent: some View {\n"
         "        SkinIntegrationRoot()\n"
         "    }\n\n"
@@ -106,7 +108,7 @@ def patch_ios_main_view(apple):
         fail("SFI/MainView.swift: openURL not found")
     text = text.replace(
         anchor,
-        anchor + "        // SB-Skin: widget and Live Activity links.\n"
+        anchor + "        // Skywave: widget and Live Activity links.\n"
         "        if SkinIntegration.handle(url, environments: environments) {\n"
         "            return\n"
         "        }\n",
@@ -129,7 +131,7 @@ def patch_mac_main_view(apple):
     first_close = matching_brace(text, text.index("{", split))
     detail_open = text.index("{", first_close + 1)
     detail_close = matching_brace(text, detail_open)
-    text = text[:split] + "SkinIntegrationRoot() // SB-Skin: the skins replace the sidebar layout." + text[detail_close + 1:]
+    text = text[:split] + "SkinIntegrationRoot() // Skywave: the skins replace the sidebar layout." + text[detail_close + 1:]
     # The upstream window toolbar (start/stop, card management) duplicates skin controls.
     toolbar = text.find(".toolbar {", text.find("SkinIntegrationRoot()"))
     if toolbar >= 0:
@@ -147,7 +149,7 @@ def patch_widget_bundle(apple):
         return "WidgetExtension/ExtensionBundle.swift already patched"
     if "ServiceToggleControl()" not in text:
         fail("WidgetExtension/ExtensionBundle.swift: ServiceToggleControl() not found")
-    text = text.replace("import SwiftUI\n", "import SBSkinWidgets\nimport SwiftUI\n", 1)
+    text = text.replace("import SwiftUI\n", "import SkywaveWidgets\nimport SwiftUI\n", 1)
     text = text.replace(
         "ServiceToggleControl()\n",
         "ServiceToggleControl()\n"
@@ -210,11 +212,72 @@ def rename_app(apple, name):
 
 def copy_sources(apple):
     for folder in ["SFI", "MacLibrary"]:
-        target = os.path.join(apple, folder, "SBSkinIntegration")
+        target = os.path.join(apple, folder, "SkywaveIntegration")
         os.makedirs(target, exist_ok=True)
         for name in INTEGRATION_FILES:
             shutil.copyfile(os.path.join(HERE, "Apple", name), os.path.join(target, name))
     return f"copied {len(INTEGRATION_FILES)} integration files into SFI/ and MacLibrary/ (synchronized groups)"
+
+
+BRANDING = os.path.join(os.path.dirname(HERE), "Branding")
+
+# (source under Branding/, destination under <apple>/). Every upstream icon carries the
+# upstream mark, so all of them are replaced; nothing may look first-party.
+ICON_TARGETS = [
+    ("ios/AppIcon.appiconset", "SFI/Assets.xcassets/AppIcon.appiconset"),
+    ("ios/AppIcon.appiconset", "WidgetExtension/Assets.xcassets/AppIcon.appiconset"),
+    ("ios/AppIcon.appiconset", "ActionExtension/Assets.xcassets/AppIcon.appiconset"),
+    ("mac/AppIcon.appiconset", "MacLibrary/Assets.xcassets/AppIcon.appiconset"),
+    ("mac/AppIcon.icon", "MacLibrary/AppIcon.icon"),
+    ("mac/AppIcon.icns", "MacLibrary/Icons/AppIcon.icns"),
+    ("mac/MenuIcon.imageset", "MacLibrary/Assets.xcassets/MenuIcon.imageset"),
+]
+ICON_REMOVALS = ["MacLibrary/Assets.xcassets/MenuIcon.symbolset"]
+
+
+def tree_digest(path):
+    """Cheap content fingerprint of a file or folder, for idempotency reporting."""
+    import hashlib
+    digest = hashlib.sha256()
+    if os.path.isfile(path):
+        with open(path, "rb") as handle:
+            digest.update(handle.read())
+    elif os.path.isdir(path):
+        for root, _, files in sorted(os.walk(path)):
+            for name in sorted(files):
+                digest.update(os.path.relpath(os.path.join(root, name), path).encode())
+                with open(os.path.join(root, name), "rb") as handle:
+                    digest.update(handle.read())
+    return digest.hexdigest()
+
+
+def install_icons(apple):
+    changed = []
+    pairs = list(ICON_TARGETS)
+    for name in sorted(os.listdir(os.path.join(BRANDING, "ios"))):
+        if name.startswith("AppIcon-"):  # per-skin alternate icons (iOS)
+            pairs.append((f"ios/{name}", f"SFI/Assets.xcassets/{name}"))
+    for source, destination in pairs:
+        src, dst = os.path.join(BRANDING, source), os.path.join(apple, destination)
+        if not os.path.exists(os.path.dirname(dst)):
+            continue  # target not present in this checkout
+        if tree_digest(src) == tree_digest(dst):
+            continue
+        if os.path.isdir(dst):
+            shutil.rmtree(dst)
+        if os.path.isdir(src):
+            shutil.copytree(src, dst)
+        else:
+            shutil.copyfile(src, dst)
+        changed.append(destination)
+    for removal in ICON_REMOVALS:
+        path = os.path.join(apple, removal)
+        if os.path.exists(path):
+            shutil.rmtree(path)
+            changed.append(f"removed {removal}")
+    if not changed:
+        return ["Skywave icons already installed"]
+    return [f"installed Skywave icons ({len(changed)} items: app, alternates, widget, share, Mac, menu bar)"]
 
 
 # ---------------------------------------------------------------------------
@@ -338,7 +401,7 @@ def patch_project(apple, local_path, url, branch):
     project.append_to_list(project_id, "packageReferences", f"{package_id} /* {package_comment} */")
 
     # Products → targets.
-    for product, target_name in [("SBSkin", "SFI"), ("SBSkin", "MacLibrary"), ("SBSkinWidgets", "WidgetExtension")]:
+    for product, target_name in [("Skywave", "SFI"), ("Skywave", "MacLibrary"), ("SkywaveWidgets", "WidgetExtension")]:
         dependency_id = project.new_id()
         project.add_to_section(
             "XCSwiftPackageProductDependency",
@@ -373,12 +436,13 @@ def patch_project(apple, local_path, url, branch):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Wire SB-Skin into the sing-box Apple client.")
+    parser = argparse.ArgumentParser(description="Wire Skywave into the sing-box Apple client.")
     parser.add_argument("apple", help="path to sing-box/clients/apple")
-    parser.add_argument("--local", help="use a local SB-Skin checkout instead of GitHub")
-    parser.add_argument("--url", default=DEFAULT_URL, help="SB-Skin repository URL")
-    parser.add_argument("--branch", default="main", help="SB-Skin branch")
-    parser.add_argument("--app-name", help="replace the upstream product name in display names and visible labels")
+    parser.add_argument("--local", help="use a local Skywave checkout instead of GitHub")
+    parser.add_argument("--url", default=DEFAULT_URL, help="Skywave repository URL")
+    parser.add_argument("--branch", default="main", help="Skywave branch")
+    parser.add_argument("--app-name", default="Skywave",
+                        help="product name that replaces the upstream name in display names and visible labels (default: Skywave)")
     args = parser.parse_args()
 
     apple = os.path.abspath(args.apple)
@@ -393,6 +457,7 @@ def main():
         patch_info_plist(apple),
     ]
     steps += patch_project(apple, args.local, args.url, args.branch)
+    steps += install_icons(apple)
     if args.app_name:
         steps += rename_app(apple, args.app_name)
     for step in steps:

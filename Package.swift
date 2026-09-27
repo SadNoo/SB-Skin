@@ -1,12 +1,12 @@
 // swift-tools-version: 6.2
 //
-// SB-Skin — third-party skins for the sing-box Apple clients.
+// Skywave — third-party skins for the sing-box Apple clients.
 // Licensed under GPL-3.0-or-later. See LICENSE and COPYING.
 
 import PackageDescription
 
 let package = Package(
-    name: "SBSkin",
+    name: "Skywave",
     defaultLocalization: "en",
     platforms: [
         .iOS(.v26),
@@ -14,31 +14,31 @@ let package = Package(
     ],
     products: [
         // Main app UI: skin switcher, eight skins, shared pages.
-        .library(name: "SBSkin", targets: ["SBSkin"]),
+        .library(name: "Skywave", targets: ["Skywave"]),
         // Widget extension UI: Live Activity, Dynamic Island, home and lock screen widgets.
-        .library(name: "SBSkinWidgets", targets: ["SBSkinWidgets"]),
+        .library(name: "SkywaveWidgets", targets: ["SkywaveWidgets"]),
     ],
     targets: [
         .target(
-            name: "SBSkinShared",
+            name: "SkywaveShared",
             resources: [.process("Resources")],
             swiftSettings: [.swiftLanguageMode(.v5)]
         ),
         .target(
-            name: "SBSkin",
-            dependencies: ["SBSkinShared"],
+            name: "Skywave",
+            dependencies: ["SkywaveShared"],
             resources: [.process("Resources")],
             swiftSettings: [.swiftLanguageMode(.v5)]
         ),
         .target(
-            name: "SBSkinWidgets",
-            dependencies: ["SBSkinShared"],
+            name: "SkywaveWidgets",
+            dependencies: ["SkywaveShared"],
             resources: [.process("Resources")],
             swiftSettings: [.swiftLanguageMode(.v5)]
         ),
         .testTarget(
-            name: "SBSkinTests",
-            dependencies: ["SBSkin", "SBSkinShared"],
+            name: "SkywaveTests",
+            dependencies: ["Skywave", "SkywaveShared"],
             swiftSettings: [.swiftLanguageMode(.v5)]
         ),
     ]

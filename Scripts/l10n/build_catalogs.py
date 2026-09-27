@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Regenerates the Localizable.xcstrings catalogs of SBSkin, SBSkinShared and SBSkinWidgets.
+"""Regenerates the Localizable.xcstrings catalogs of Skywave, SkywaveShared and SkywaveWidgets.
 
 Keys are the English source strings passed to SkinL / Text(skin:) / SharedL / WidgetL.
 Translations live in Scripts/l10n/<locale>.json (one flat table shared by all modules).
@@ -14,7 +14,7 @@ import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 LOCALES = ["zh-Hans", "zh-Hant"]
-MODULES = ["SBSkin", "SBSkinShared", "SBSkinWidgets"]
+MODULES = ["Skywave", "SkywaveShared", "SkywaveWidgets"]
 PATTERN = re.compile(
     r'\b(?:SkinL|SharedL|WidgetL)\(\s*"((?:[^"\\]|\\.)*)"|Text\(skin:\s*"((?:[^"\\]|\\.)*)"'
 )

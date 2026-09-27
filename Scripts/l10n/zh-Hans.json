@@ -218,7 +218,6 @@
  "Show": "显示",
  "Skin": "皮肤",
  "Skins": "皮肤",
- "Skins by SB-Skin, free software under GPL-3.0-or-later.": "皮肤来自 SB-Skin，以 GPL-3.0-or-later 授权的自由软件。",
  "Sort By": "排序方式",
  "Source": "来源",
  "Speed": "速度",
@@ -340,5 +339,7 @@
  "Unreachable": "不可达",
  "Very fast": "很快",
  "Where you are, and how the road is": "你在哪里，路况如何",
- "Your panel, arranged your way": "你的面板，你来摆"
+ "Your panel, arranged your way": "你的面板，你来摆",
+ "%@ is an unofficial third-party app. It is not made by or affiliated with the developers of the network core it uses.": "%@ 是非官方的第三方 App，并非由其所用网络核心的开发者制作，也与他们无关。",
+ "Free software under GPL-3.0-or-later.": "以 GPL-3.0-or-later 授权的自由软件。"
 }

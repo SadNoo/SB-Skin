@@ -45,7 +45,7 @@ room for something, it links to a shared page.
   are closures that return the upstream Profiles, Tools, Settings and Remote Control views.
 - **SkinPreferences** hold the skin, onboarding state, wording, color mode, icon choice, Bento
   layout, log level and Radio band. They live in the app's own defaults and are never synced,
-  so devices running different SB-Skin versions (with different skin sets) never conflict.
+  so devices running different Skywave versions (with different skin sets) never conflict.
 
 ## Themes
 
@@ -69,7 +69,7 @@ below 760 pt. Mac uses the regular layouts inside a window.
 - starts, updates and ends the Live Activity for the running service (iOS).
 
 Widgets never talk to the core. They render the snapshot, and their buttons deep-link back
-into the app (`<scheme>://sbskin/<action>`).
+into the app (`<scheme>://skywave/<action>`).
 
 ## Localization
 
@@ -80,5 +80,5 @@ the catalogs from `Scripts/l10n/<locale>.json`. Radio's silk-screen labels ("ON 
 
 ## Naming
 
-The upstream name never appears in SB-Skin's UI. The app name comes from the host bundle, and
+The upstream name never appears in Skywave's UI. The app name comes from the host bundle, and
 `apply_to_upstream.py --app-name` removes the remaining upstream labels from the host.

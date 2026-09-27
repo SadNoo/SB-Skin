@@ -1,16 +1,26 @@
-# SB-Skin
+<img src="docs/images/icon.png" width="128" alt="Skywave icon: a tuning knob under an arc of sky">
+
+# Skywave · 天波
 
 **English** · [简体中文](README.zh-Hans.md)
 
+> **Unofficial.** Skywave is an independent third-party project. It is not made, endorsed or
+> maintained by the developers of the core it runs on, and it is not an official client.
+
 Third-party skins for the Apple client of an open-source universal proxy platform (sing-box,
-<https://github.com/SagerNet/sing-box>). SB-Skin replaces the client's navigation with eight
+<https://github.com/SagerNet/sing-box>). Skywave replaces the client's navigation with eight
 interchangeable interfaces and leaves every feature as it was. You can switch skins at any
 time.
 
-> SB-Skin is an independent project. It has no affiliation with the upstream authors. The
-> upstream license does not allow derivative works to use the upstream name, so SB-Skin never
-> shows it in its interface. The integration script can also remove it from the host app
-> (`--app-name`).
+The upstream license does not allow derivative works to use the upstream name or imply
+association, so Skywave never shows it: the app is named Skywave, every upstream icon is
+replaced, and the app itself says it is unofficial (first launch and Settings › About).
+
+The name comes from shortwave radio: a *skywave* is a signal that bounces off the sky to reach
+places a straight line cannot. The icon is a tuning knob turned toward a station on that arc
+of sky. With "App Icon Follows Skin" on, the icon wears each skin's colors:
+
+![Skywave icon in each skin's colors](docs/images/icon-variants.png)
 
 ![All eight skins on iPhone](docs/images/iphone-skins.jpg)
 
@@ -39,7 +49,7 @@ All skins share these:
 - **Wording.** Choose everyday words ("Smart routing", "Very fast") or technical terms
   ("Rule", "186 ms").
 - **Per device.** Each device remembers its own skin; nothing is synced, so devices on
-  different SB-Skin versions never conflict.
+  different Skywave versions never conflict.
 - **App icon.** An optional alternate app icon can follow the skin.
 - **Widgets and Live Activity.** Home Screen and Lock Screen widgets, a Live Activity and
   the Dynamic Island.
@@ -56,12 +66,12 @@ tint them to match.
 ## Repository layout
 
 ```
-Sources/SBSkinShared   Formatting, vocabulary, widget snapshot, deep links (app + widgets)
-Sources/SBSkin         The skins, shared pages, store, theme and system-surface sync
-Sources/SBSkinWidgets  Status widget and Live Activity
-Integration/Apple      Glue between SBSkin and the upstream Apple client
+Sources/SkywaveShared   Formatting, vocabulary, widget snapshot, deep links (app + widgets)
+Sources/Skywave         The skins, shared pages, store, theme and system-surface sync
+Sources/SkywaveWidgets  Status widget and Live Activity
+Integration/Apple      Glue between Skywave and the upstream Apple client
 Integration/TypeCheck  Signature stubs for type-checking the glue without building Libbox
-Integration/apply_to_upstream.py   Wires SB-Skin into an upstream checkout
+Integration/apply_to_upstream.py   Wires Skywave into an upstream checkout
 Demo/                  Stand-alone demo app with mock data (xcodegen)
 Scripts/l10n           Translation tables and the catalog generator
 ```
@@ -73,14 +83,14 @@ brew install xcodegen
 ```
 
 ```bash
-cd Demo && xcodegen && open SBSkinDemo.xcodeproj
+cd Demo && xcodegen && open SkywaveDemo.xcodeproj
 ```
 
 The demo accepts these launch arguments:
 
-- `-sbskin-skin <native|instrument|focus|places|lens|sentence|radio|bento>` picks a skin.
-- `-sbskin-scenario <live|frozen|stopped|empty>` picks the mock data.
-- `-sbskin-onboarding` shows the first-launch picker.
+- `-skywave-skin <native|instrument|focus|places|lens|sentence|radio|bento>` picks a skin.
+- `-skywave-scenario <live|frozen|stopped|empty>` picks the mock data.
+- `-skywave-onboarding` shows the first-launch picker.
 
 ## Build the real client
 
@@ -101,7 +111,7 @@ swift build --package-path Integration/TypeCheck
 python3 Scripts/l10n/build_catalogs.py
 ```
 
-`swift test` runs the unit tests. Set `SBSKIN_SNAPSHOTS=<dir>` to also render Mac snapshots of
+`swift test` runs the unit tests. Set `SKYWAVE_SNAPSHOTS=<dir>` to also render Mac snapshots of
 every skin. The `Integration/TypeCheck` build type-checks the upstream glue against the stubs.
 `build_catalogs.py` regenerates the string catalogs after you change strings.
 
@@ -109,9 +119,9 @@ Architecture notes are in [DESIGN.md](DESIGN.md).
 
 ## License
 
-SB-Skin is free software under the GNU General Public License v3.0 or later. See
+Skywave is free software under the GNU General Public License v3.0 or later. See
 [LICENSE](LICENSE) and [COPYING](COPYING).
 
 The bundled dot-matrix font is derived from Doto (SIL Open Font License 1.1). See
-`Sources/SBSkin/Resources/Fonts/OFL.txt`. The world map is derived from Natural Earth (public
+`Sources/Skywave/Resources/Fonts/OFL.txt`. The world map is derived from Natural Earth (public
 domain).

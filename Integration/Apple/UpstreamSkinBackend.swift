@@ -1,4 +1,4 @@
-// SB-Skin ⇄ sing-box Apple client bridge.
+// Skywave ⇄ sing-box Apple client bridge.
 //
 // Compile this file into the SFI (iOS) and SFM (macOS) app targets of
 // https://github.com/SagerNet/sing-box (clients/apple). It only uses APIs the upstream
@@ -13,7 +13,7 @@ import Foundation
 import Libbox
 import Library
 import NetworkExtension
-import SBSkin
+import Skywave
 
 @MainActor
 public final class UpstreamSkinBackend: SkinBackend {

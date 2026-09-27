@@ -1,10 +1,18 @@
-# SB-Skin
+<img src="docs/images/icon.png" width="128" alt="天波图标：一个旋钮，上方是一道天空的弧线">
+
+# Skywave · 天波
 
 [English](README.md) · **简体中文**
 
-SB-Skin 为一个开源通用代理平台（sing-box，<https://github.com/SagerNet/sing-box>）的 Apple 客户端提供第三方皮肤。它用八套可随时切换的界面替换客户端原有的导航，**功能一个不改**。
+> **非官方。** 天波是独立的第三方项目，并非由其所用网络核心的开发者制作、认可或维护，也不是官方客户端。
 
-> SB-Skin 是独立项目，与上游作者无关。上游许可证不允许衍生作品使用上游名称，所以 SB-Skin 的界面里不会出现这个名称。集成脚本也可以把它从宿主 App 中去掉（`--app-name`）。
+Skywave 为一个开源通用代理平台（sing-box，<https://github.com/SagerNet/sing-box>）的 Apple 客户端提供第三方皮肤。它用八套可随时切换的界面替换客户端原有的导航，**功能一个不改**。
+
+上游许可证不允许衍生作品使用上游名称或暗示与其有关联，所以天波不会出现上游名称：App 名为 Skywave，上游的所有图标都被替换，App 本身也会注明自己是非官方的（首次启动页和"设置 › 关于"）。
+
+名字来自短波电台："天波"是被高空电离层反射、越过山海传到远方的信号。图标是一个旋钮，指针正对着天空弧线上的一个电台。打开"App 图标跟随皮肤"后，图标会换成每套皮肤的配色：
+
+![各皮肤配色的天波图标](docs/images/icon-variants.png)
 
 ![iPhone 上的八套皮肤](docs/images/iphone-skins.jpg)
 
@@ -45,12 +53,12 @@ SB-Skin 为一个开源通用代理平台（sing-box，<https://github.com/Sager
 ## 目录结构
 
 ```
-Sources/SBSkinShared   格式化、用语、小组件快照、深度链接（App 与小组件共用）
-Sources/SBSkin         皮肤、通用页面、状态存储、主题、系统界面同步
-Sources/SBSkinWidgets  状态小组件与实时活动
-Integration/Apple      SBSkin 与上游 Apple 客户端之间的对接代码
+Sources/SkywaveShared   格式化、用语、小组件快照、深度链接（App 与小组件共用）
+Sources/Skywave         皮肤、通用页面、状态存储、主题、系统界面同步
+Sources/SkywaveWidgets  状态小组件与实时活动
+Integration/Apple      Skywave 与上游 Apple 客户端之间的对接代码
 Integration/TypeCheck  上游接口的签名替身，无需编译 Libbox 即可对对接代码做类型检查
-Integration/apply_to_upstream.py   把 SB-Skin 接入上游代码的脚本
+Integration/apply_to_upstream.py   把 Skywave 接入上游代码的脚本
 Demo/                  使用模拟数据的独立演示 App（xcodegen）
 Scripts/l10n           翻译表与字符串目录生成脚本
 ```
@@ -62,14 +70,14 @@ brew install xcodegen
 ```
 
 ```bash
-cd Demo && xcodegen && open SBSkinDemo.xcodeproj
+cd Demo && xcodegen && open SkywaveDemo.xcodeproj
 ```
 
 演示 App 支持以下启动参数：
 
-- `-sbskin-skin <native|instrument|focus|places|lens|sentence|radio|bento>`：指定皮肤。
-- `-sbskin-scenario <live|frozen|stopped|empty>`：指定模拟数据。
-- `-sbskin-onboarding`：显示首次启动的风格选择页。
+- `-skywave-skin <native|instrument|focus|places|lens|sentence|radio|bento>`：指定皮肤。
+- `-skywave-scenario <live|frozen|stopped|empty>`：指定模拟数据。
+- `-skywave-onboarding`：显示首次启动的风格选择页。
 
 ## 编译正式客户端
 
@@ -89,7 +97,7 @@ swift build --package-path Integration/TypeCheck
 python3 Scripts/l10n/build_catalogs.py
 ```
 
-- `swift test`：运行单元测试。设置 `SBSKIN_SNAPSHOTS=<目录>` 时，还会渲染每套皮肤的 Mac 快照。
+- `swift test`：运行单元测试。设置 `SKYWAVE_SNAPSHOTS=<目录>` 时，还会渲染每套皮肤的 Mac 快照。
 - `Integration/TypeCheck`：用签名替身对上游对接代码做类型检查。
 - `build_catalogs.py`：修改界面文字后，用它重新生成字符串目录。
 
@@ -97,6 +105,6 @@ python3 Scripts/l10n/build_catalogs.py
 
 ## 许可证
 
-SB-Skin 是自由软件，采用 GNU 通用公共许可证第 3 版或更高版本，见 [LICENSE](LICENSE) 和 [COPYING](COPYING)。
+Skywave 是自由软件，采用 GNU 通用公共许可证第 3 版或更高版本，见 [LICENSE](LICENSE) 和 [COPYING](COPYING)。
 
-内置的点阵字体派生自 Doto（SIL Open Font License 1.1），见 `Sources/SBSkin/Resources/Fonts/OFL.txt`。世界地图数据来自 Natural Earth（公有领域）。
+内置的点阵字体派生自 Doto（SIL Open Font License 1.1），见 `Sources/Skywave/Resources/Fonts/OFL.txt`。世界地图数据来自 Natural Earth（公有领域）。

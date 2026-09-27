@@ -1,12 +1,12 @@
-name: SBSkinDemo
+name: SkywaveDemo
 options:
-  bundleIdPrefix: io.github.sadnoo.sbskin
+  bundleIdPrefix: io.github.sadnoo.skywave
   deploymentTarget:
     iOS: "26.0"
     macOS: "26.0"
   createIntermediateGroups: true
 packages:
-  SBSkin:
+  Skywave:
     path: ..
 settings:
   base:
@@ -19,19 +19,19 @@ settings:
     DEVELOPMENT_TEAM: ""
     PROVISIONING_PROFILE_SPECIFIER: ""
 targets:
-  SBSkinDemo:
+  SkywaveDemo:
     type: application
     supportedDestinations: [iOS, macOS]
     sources: [App]
     dependencies:
-      - package: SBSkin
-        product: SBSkin
-      - target: SBSkinDemoWidgets
+      - package: Skywave
+        product: Skywave
+      - target: SkywaveDemoWidgets
         destinationFilters: [iOS]
     info:
       path: App/Info.plist
       properties:
-        CFBundleDisplayName: Skin Demo
+        CFBundleDisplayName: Skywave Demo
         CFBundleLocalizations: [en, zh-Hans, zh-Hant]
         CFBundleShortVersionString: $(MARKETING_VERSION)
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
@@ -40,29 +40,31 @@ targets:
         UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait, UIInterfaceOrientationLandscapeLeft, UIInterfaceOrientationLandscapeRight]
         UISupportedInterfaceOrientations~ipad: [UIInterfaceOrientationPortrait, UIInterfaceOrientationPortraitUpsideDown, UIInterfaceOrientationLandscapeLeft, UIInterfaceOrientationLandscapeRight]
         CFBundleURLTypes:
-          - CFBundleURLName: io.github.sadnoo.sbskin.demo
-            CFBundleURLSchemes: [sbskindemo]
+          - CFBundleURLName: io.github.sadnoo.skywave.demo
+            CFBundleURLSchemes: [skywavedemo]
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: io.github.sadnoo.sbskin.demo
+        PRODUCT_BUNDLE_IDENTIFIER: io.github.sadnoo.skywave.demo
         TARGETED_DEVICE_FAMILY: "1,2"
         ENABLE_HARDENED_RUNTIME: NO
-  SBSkinDemoWidgets:
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS: YES
+  SkywaveDemoWidgets:
     type: app-extension
     platform: iOS
     sources: [Widgets]
     dependencies:
-      - package: SBSkin
-        product: SBSkinWidgets
+      - package: Skywave
+        product: SkywaveWidgets
     info:
       path: Widgets/Info.plist
       properties:
-        CFBundleDisplayName: Skin Demo Widgets
+        CFBundleDisplayName: Skywave Demo Widgets
         CFBundleShortVersionString: $(MARKETING_VERSION)
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         NSExtension:
           NSExtensionPointIdentifier: com.apple.widgetkit-extension
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: io.github.sadnoo.sbskin.demo.widgets
+        PRODUCT_BUNDLE_IDENTIFIER: io.github.sadnoo.skywave.demo.widgets
         TARGETED_DEVICE_FAMILY: "1,2"

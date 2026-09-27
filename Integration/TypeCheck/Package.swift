@@ -11,19 +11,19 @@
 import PackageDescription
 
 let package = Package(
-    name: "SBSkinIntegrationTypeCheck",
+    name: "SkywaveIntegrationTypeCheck",
     platforms: [.iOS(.v26), .macOS(.v26)],
     targets: [
-        // SB-Skin itself, via symlinks to ../../Sources, so the package identity does not
+        // Skywave itself, via symlinks to ../../Sources, so the package identity does not
         // depend on the checkout folder name.
-        .target(name: "SBSkinShared", resources: [.process("Resources")], swiftSettings: [.swiftLanguageMode(.v5)]),
-        .target(name: "SBSkin", dependencies: ["SBSkinShared"], resources: [.process("Resources")], swiftSettings: [.swiftLanguageMode(.v5)]),
+        .target(name: "SkywaveShared", resources: [.process("Resources")], swiftSettings: [.swiftLanguageMode(.v5)]),
+        .target(name: "Skywave", dependencies: ["SkywaveShared"], resources: [.process("Resources")], swiftSettings: [.swiftLanguageMode(.v5)]),
         .target(name: "Libbox", swiftSettings: [.swiftLanguageMode(.v5)]),
         .target(name: "Library", dependencies: ["Libbox"], swiftSettings: [.swiftLanguageMode(.v5)]),
         .target(name: "ApplicationLibrary", dependencies: ["Library", "Libbox"], swiftSettings: [.swiftLanguageMode(.v5)]),
         .target(
             name: "IntegrationUnderTest",
-            dependencies: ["Libbox", "Library", "ApplicationLibrary", "SBSkin"],
+            dependencies: ["Libbox", "Library", "ApplicationLibrary", "Skywave"],
             swiftSettings: [.swiftLanguageMode(.v5)]
         ),
     ]
