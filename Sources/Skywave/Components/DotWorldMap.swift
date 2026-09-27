@@ -83,7 +83,7 @@ private struct SelectedPin: View {
     let label: String
     let color: Color
     let labelColor: Color
-    @Environment(\.skinThumbnailMode) private var thumbnail
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @State private var pulse = false
 
     var body: some View {
@@ -108,7 +108,7 @@ private struct SelectedPin: View {
                 .offset(y: 30)
         }
         .onAppear {
-            guard !thumbnail else { return }
+            guard !reduceMotion else { return }
             withAnimation(.easeInOut(duration: 1.6).repeatForever(autoreverses: true)) { pulse = true }
         }
     }

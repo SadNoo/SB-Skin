@@ -102,6 +102,7 @@ python3 Scripts/l10n/build_catalogs.py
 - `swift test`：运行单元测试。设置 `SKYWAVE_SNAPSHOTS=<目录>` 时，还会渲染每套皮肤的 Mac 快照。
 - `Integration/TypeCheck`：用签名替身对上游对接代码做类型检查。
 - `build_catalogs.py`：修改界面文字后，用它重新生成字符串目录。
+- `Scripts/make_thumbnails.sh "iPhone 17 Pro"`：选皮肤页面用的是预先生成的截图。改了某套皮肤的样子后，用它在 iPhone 模拟器上重新生成缩略图，大约 5 分钟。
 
 架构说明见 [DESIGN.md](DESIGN.md)。
 

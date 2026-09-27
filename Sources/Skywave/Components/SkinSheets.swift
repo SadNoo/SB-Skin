@@ -10,17 +10,12 @@ extension View {
 
 private struct SkinSheetsModifier: ViewModifier {
     @Environment(SkinRouter.self) private var router
-    @Environment(\.skinThumbnailMode) private var thumbnail
     let nodePicker: ((String?) -> AnyView)?
 
     func body(content: Content) -> some View {
         @Bindable var router = router
-        if thumbnail {
-            content
-        } else {
-            content.sheet(item: $router.sheet) { sheet in
-                SheetContainer(sheet: sheet, focusedGroup: router.focusedGroup, nodePicker: nodePicker)
-            }
+        content.sheet(item: $router.sheet) { sheet in
+            SheetContainer(sheet: sheet, focusedGroup: router.focusedGroup, nodePicker: nodePicker)
         }
     }
 }

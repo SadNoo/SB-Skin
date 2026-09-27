@@ -1,7 +1,7 @@
 import SkywaveShared
 import SwiftUI
 
-/// Settings › Appearance: pick a skin (live thumbnails), vocabulary, color scheme, icon, sync.
+/// Settings › Appearance: pick a skin (thumbnails), vocabulary, color scheme and icon.
 struct AppearancePage: View {
     @Environment(SkinPreferences.self) private var preferences
     @Environment(\.skinTheme) private var theme

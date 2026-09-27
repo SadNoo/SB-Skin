@@ -237,11 +237,10 @@ struct InkLatencyMeter: View {
 }
 
 /// One full-screen blink when `trigger` changes: the e-paper refresh. Skipped with Reduce
-/// Motion and in thumbnails.
+/// Motion.
 private struct InkRefresh<Trigger: Equatable>: ViewModifier {
     let trigger: Trigger
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    @Environment(\.skinThumbnailMode) private var thumbnail
     @State private var flashing = false
 
     func body(content: Content) -> some View {
@@ -250,7 +249,7 @@ private struct InkRefresh<Trigger: Equatable>: ViewModifier {
                 Color.black.opacity(flashing ? 0.88 : 0).allowsHitTesting(false).ignoresSafeArea()
             }
             .onChange(of: trigger) { _, _ in
-                guard !reduceMotion, !thumbnail else { return }
+                guard !reduceMotion else { return }
                 flashing = true
                 Task { @MainActor in
                     try? await Task.sleep(for: .milliseconds(90))

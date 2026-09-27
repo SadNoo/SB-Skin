@@ -9,20 +9,9 @@ struct NativeDashboard: View {
     @Environment(\.skinTheme) private var theme
     @Environment(\.horizontalSizeClass) private var sizeClass
     @Environment(\.skinConfiguration) private var configuration
-    @Environment(\.skinThumbnailMode) private var isThumbnail
 
     var body: some View {
         ScrollView {
-            // UIKit lays the large title out against the real (tiny) frame of a thumbnail,
-            // which pushes it to the edge; draw it in SwiftUI there instead.
-            if isThumbnail {
-                Text(skin: "Dashboard")
-                    .font(.largeTitle.bold())
-                    .foregroundStyle(theme.text)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.horizontal, 16)
-                    .padding(.top, 52)
-            }
             Group {
                 if store.needsGate {
                     NoProfileView()
@@ -37,9 +26,6 @@ struct NativeDashboard: View {
         }
         .background(theme.background)
         .navigationTitle(SkinL("Dashboard"))
-        #if os(iOS)
-        .toolbar(isThumbnail ? .hidden : .automatic, for: .navigationBar)
-        #endif
         .toolbar {
             if sizeClass != .regular {
                 ToolbarItem(placement: .primaryAction) {

@@ -25,7 +25,7 @@ public struct SkinRootView: View {
             .environment(preferences)
             .environment(session.router)
             .environment(\.skinConfiguration, session.configuration)
-            .preferredColorScheme(theme.forcedColorScheme ?? preferences.appearance.colorScheme)
+            .windowColorScheme(theme.forcedColorScheme ?? preferences.appearance.colorScheme)
             .overlay {
                 if router.showsCommandPalette {
                     CommandPalette(isPresented: $router.showsCommandPalette)
@@ -68,6 +68,12 @@ public struct SkinRootView: View {
                 session.handle(url)
             }
             .onAppear { store.backend.activate() }
+            .onChange(of: preferences.skin) { _, _ in
+                // The old skin, and any sheet it presented, is gone. Start the new one clean so
+                // a stale `sheet` value can't block the next presentation.
+                session.router.sheet = nil
+                session.router.showsCommandPalette = false
+            }
             .onChange(of: scenePhase) { _, phase in
                 switch phase {
                 case .active: store.backend.activate()
@@ -127,7 +133,7 @@ private struct RemoteBanner: View {
     }
 }
 
-/// Renders one skin with its theme. Used by the root and by thumbnails.
+/// Renders one skin with its theme.
 struct SkinCanvas: View {
     let skin: SkinID
     @Environment(\.colorScheme) private var colorScheme

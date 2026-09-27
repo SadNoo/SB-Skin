@@ -88,7 +88,7 @@ public final class SkinPreferences {
         hasChosenSkin = defaults.bool(forKey: Key.hasChosenSkin)
         vocabularyOverride = defaults.string(forKey: Key.vocabulary).flatMap(SkinVocabulary.init(rawValue:))
         appearance = defaults.string(forKey: Key.appearance).flatMap(SkinAppearance.init(rawValue:)) ?? .system
-        iconFollowsSkin = defaults.object(forKey: Key.iconFollowsSkin) as? Bool ?? true
+        iconFollowsSkin = defaults.object(forKey: Key.iconFollowsSkin) as? Bool ?? false  // iOS shows an alert on every icon change
         bentoModules = defaults.stringArray(forKey: Key.bentoModules) ?? BentoModuleID.defaultOrder.map(\.rawValue)
         logLevel = SkinLogLevel(rawValue: defaults.integer(forKey: Key.logLevel)) ?? .info
         if defaults.object(forKey: Key.logLevel) == nil {

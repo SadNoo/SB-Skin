@@ -117,6 +117,13 @@ python3 Scripts/l10n/build_catalogs.py
 every skin. The `Integration/TypeCheck` build type-checks the upstream glue against the stubs.
 `build_catalogs.py` regenerates the string catalogs after you change strings.
 
+The skin picker shows pre-rendered thumbnails. After changing how a skin looks, regenerate
+them with a booted iPhone simulator (about five minutes):
+
+```bash
+Scripts/make_thumbnails.sh "iPhone 17 Pro"
+```
+
 Architecture notes are in [DESIGN.md](DESIGN.md).
 
 ## License

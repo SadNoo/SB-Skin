@@ -148,7 +148,7 @@ struct FocusProfileButton: View {
 struct FocusPowerButton: View {
     @Environment(SkinStore.self) private var store
     @Environment(\.skinTheme) private var theme
-    @Environment(\.skinThumbnailMode) private var thumbnail
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     var diameter: CGFloat = 150
     @State private var pulse = false
 
@@ -185,7 +185,7 @@ struct FocusPowerButton: View {
             .accessibilityLabel(Text(active ? SkinL("Disconnect") : SkinL("Connect")))
         }
         .onAppear {
-            guard !thumbnail else { return }
+            guard !reduceMotion else { return }
             withAnimation(.easeInOut(duration: 1.8).repeatForever(autoreverses: true)) { pulse = true }
         }
     }
