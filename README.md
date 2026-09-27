@@ -8,7 +8,7 @@
 > maintained by the developers of the core it runs on, and it is not an official client.
 
 Third-party skins for the Apple client of an open-source universal proxy platform (sing-box,
-<https://github.com/SagerNet/sing-box>). Skywave replaces the client's navigation with eight
+<https://github.com/SagerNet/sing-box>). Skywave replaces the client's navigation with ten
 interchangeable interfaces and leaves every feature as it was. You can switch skins at any
 time.
 
@@ -22,7 +22,7 @@ of sky. With "App Icon Follows Skin" on, the icon wears each skin's colors:
 
 ![Skywave icon in each skin's colors](docs/images/icon-variants.png)
 
-![All eight skins on iPhone](docs/images/iphone-skins.jpg)
+![All ten skins on iPhone](docs/images/iphone-skins.jpg)
 
 ## Skins
 
@@ -36,6 +36,8 @@ of sky. With "App Icon Follows Skin" on, the icon wears each skin's colors:
 | **One Sentence** | People who like calm, beautiful typography | The whole state in one editorial sentence; tap the underlined words to change them |
 | **Radio** | People who love tactile hardware | An LCD, a tuning knob with haptics, piano keys; logs print as a receipt |
 | **Bento** | Tinkerers who want to customize | Rearrange modules; dot-matrix numerals |
+| **E-Ink** | People who like quiet, readable screens | An e-paper reader: black on paper, serif type, lists turn page by page, a short refresh blink (off with Reduce Motion) |
+| **Corner Store** | People who want it fun and friendly | Nodes are goods on shelves with latency as the price tag; open or close the store to connect; the profile is a membership card; connections print as a receipt |
 
 Every skin has an iPhone layout and a regular-width layout for iPad and Mac:
 

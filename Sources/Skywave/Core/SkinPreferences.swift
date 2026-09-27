@@ -107,8 +107,8 @@ extension SkinID {
     /// Plain words suit the consumer-style skins; numbers suit the data-heavy ones.
     var defaultVocabulary: SkinVocabulary {
         switch self {
-        case .focus, .places, .sentence: .everyday
-        case .native, .instrument, .lens, .radio, .bento: .technical
+        case .focus, .places, .sentence, .mart: .everyday
+        case .native, .instrument, .lens, .radio, .bento, .ink: .technical
         }
     }
 }

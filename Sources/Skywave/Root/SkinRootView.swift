@@ -153,6 +153,8 @@ struct SkinCanvas: View {
         case .sentence: SentenceSkin()
         case .radio: RadioSkin()
         case .bento: BentoSkin()
+        case .ink: InkSkin()
+        case .mart: MartSkin()
         }
     }
 }

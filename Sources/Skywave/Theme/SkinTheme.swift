@@ -43,6 +43,8 @@ extension SkinTheme {
         case .sentence: .sentence
         case .radio: .radio
         case .bento: .bento
+        case .ink: .ink
+        case .mart: .mart
         }
     }
 
@@ -196,6 +198,48 @@ extension SkinTheme {
         numberDesign: .monospaced,
         forcedColorScheme: nil,
         usesGlass: true
+    )
+}
+
+extension SkinTheme {
+    /// E-paper: four inks on warm gray paper, no color, no glass.
+    static let ink = SkinTheme(
+        id: .ink,
+        background: Color(hex: 0xEDEBE6),
+        surface: Color(hex: 0xF4F2EE),
+        elevatedSurface: Color(hex: 0xE2E0DA),
+        text: Color(hex: 0x141414),
+        secondaryText: Color(hex: 0x5C5C5C),
+        separator: Color(hex: 0x141414, opacity: 0.22),
+        accent: Color(hex: 0x141414),
+        onAccent: Color(hex: 0xF4F2EE),
+        upload: Color(hex: 0x5C5C5C),
+        download: Color(hex: 0x141414),
+        cornerRadius: 6,
+        textDesign: .serif,
+        numberDesign: .serif,
+        forcedColorScheme: .light,
+        usesGlass: false
+    )
+
+    /// Corner store: bright shop floor by day, a lit window at night.
+    static let mart = SkinTheme(
+        id: .mart,
+        background: Color(light: Color(hex: 0xFFF6E9), dark: Color(hex: 0x141117)),
+        surface: Color(light: .white, dark: Color(hex: 0x211D25)),
+        elevatedSurface: Color(light: Color(hex: 0xFFEFD6), dark: Color(hex: 0x2C2731)),
+        text: Color(light: Color(hex: 0x231C16), dark: Color(hex: 0xF6EFE6)),
+        secondaryText: Color(light: Color(hex: 0x7A6A5A), dark: Color(hex: 0xB3A79B)),
+        separator: Color(light: Color(hex: 0x231C16, opacity: 0.12), dark: Color.white.opacity(0.1)),
+        accent: Color(light: Color(hex: 0xD93D24), dark: Color(hex: 0xFF6A4D)),
+        onAccent: .white,
+        upload: Color(light: Color(hex: 0xD93D24), dark: Color(hex: 0xFF6A4D)),
+        download: Color(light: Color(hex: 0x0E8A6A), dark: Color(hex: 0x3ED6A7)),
+        cornerRadius: 18,
+        textDesign: .rounded,
+        numberDesign: .rounded,
+        forcedColorScheme: nil,
+        usesGlass: false
     )
 }
 

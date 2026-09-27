@@ -49,6 +49,8 @@ public struct SkinConfiguration {
                 .lens: "AppIcon-Lens",
                 .sentence: "AppIcon-Sentence",
                 .bento: "AppIcon-Bento",
+                .ink: "AppIcon-Ink",
+                .mart: "AppIcon-Mart",
             ]
         #else
             [:]
