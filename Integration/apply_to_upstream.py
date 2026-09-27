@@ -24,6 +24,8 @@ What it does (idempotent; running it twice changes nothing the second time):
    server label, Files app domain, Control Center toggle).
 6. Replaces every upstream icon (app, alternates, widget, share extension, Mac app, Mac
    menu bar) with the Skywave icons from Branding/.
+7. With --team and --bundle-id, signs with your Apple team and moves every bundle ID, App
+   Group and iCloud container to your prefix (upstream ships the author's own).
 
 Nothing in the upstream core (Go, Libbox, the network extension) is touched.
 
@@ -208,6 +210,30 @@ def rename_app(apple, name):
         write(project, text.replace(old, f"INFOPLIST_KEY_CFBundleDisplayName = {quoted};"))
         notes.append(f"set CFBundleDisplayName to {name!r} in {count} build configurations")
     return notes or [f"app name already {name!r}"]
+
+
+def set_identity(apple, team, bundle_id):
+    """Signs with your team and your identifiers. Every bundle ID, App Group and iCloud
+    container upstream derives from BASE_PACKAGE_IDENTIFIER, so changing it (plus the
+    team) moves the whole app off the upstream author's identity."""
+    path = os.path.join(apple, "sing-box.xcodeproj", "project.pbxproj")
+    text = read(path)
+    notes = []
+    if team:
+        if not re.fullmatch(r"[A-Z0-9]{10}", team):
+            fail(f"--team {team!r} is not a 10-character Apple team ID")
+        pattern = re.compile(r'("?DEVELOPMENT_TEAM(?:\[sdk=[^\]]*\])?"? = )(?!"")[A-Z0-9"]+;')
+        text, count = pattern.subn(lambda m: f"{m.group(1)}{team};", text)
+        notes.append(f"signing team set to {team}" if count else "signing team already set")
+    if bundle_id:
+        if not re.fullmatch(r"[A-Za-z0-9-]+(\.[A-Za-z0-9-]+)+", bundle_id):
+            fail(f"--bundle-id {bundle_id!r} is not a reverse-DNS identifier")
+        text, count = re.subn(r"(BASE_PACKAGE_IDENTIFIER = )[^;]+;", lambda m: f"{m.group(1)}{bundle_id};", text)
+        notes.append(f"bundle ID prefix set to {bundle_id} (App Group group.{bundle_id}, iCloud iCloud.{bundle_id})")
+    write(path, text)
+    if not team or not bundle_id:
+        notes.append("WARNING: without --team and --bundle-id the project still signs as the upstream author")
+    return notes
 
 
 def copy_sources(apple):
@@ -441,6 +467,8 @@ def main():
     parser.add_argument("--local", help="use a local Skywave checkout instead of GitHub")
     parser.add_argument("--url", default=DEFAULT_URL, help="Skywave repository URL")
     parser.add_argument("--branch", default="main", help="Skywave branch")
+    parser.add_argument("--team", help="your 10-character Apple Developer team ID")
+    parser.add_argument("--bundle-id", help="your bundle ID prefix, e.g. io.github.you.skywave")
     parser.add_argument("--app-name", default="Skywave",
                         help="product name that replaces the upstream name in display names and visible labels (default: Skywave)")
     args = parser.parse_args()
@@ -458,6 +486,7 @@ def main():
     ]
     steps += patch_project(apple, args.local, args.url, args.branch)
     steps += install_icons(apple)
+    steps += set_identity(apple, args.team, args.bundle_id)
     if args.app_name:
         steps += rename_app(apple, args.app_name)
     for step in steps:

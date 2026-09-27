@@ -33,6 +33,9 @@ accepts these options:
 
 - `--local "$SKIN"` uses your checkout instead of GitHub.
 - `--branch` / `--url` pin a different branch or fork.
+- `--team TEAMID` and `--bundle-id PREFIX` sign with your Apple Developer team and move every
+  bundle ID, App Group and iCloud container to your prefix. Upstream ships its author's own,
+  so always pass both.
 - `--app-name` sets the product name that replaces the upstream name in visible places
   (default `Skywave`). This always runs: the upstream license forbids using the upstream name
   or implying association. It changes:
