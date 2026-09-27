@@ -50,7 +50,8 @@ The script is idempotent: running it again changes nothing. It makes these chang
 | Where | Change |
 |---|---|
 | `SFI/SkywaveIntegration/`, `MacLibrary/SkywaveIntegration/` | Adds `UpstreamSkinBackend.swift` and `SkinIntegration.swift`. Both folders are synchronized groups, so no project edit is needed for them. |
-| `SFI/MainView.swift` | `tabViewContent` returns `SkinIntegrationRoot()`. The original stays as `upstreamTabViewContent`. `openURL` offers skin deep links first. |
+| `ApplicationLibrary/Views/Profile/NewProfileView.swift` | Exposes the `ImportRequest(name:url:)` initializer so the app modules can present upstream's remote profile import screen. |
+| `SFI/MainView.swift` | `rootContent` returns `SkinIntegrationRoot()` on both iPhone and iPad, including upstream's adaptive sidebar layout. Older clients without `rootContent` use the tab-view entry point. `openURL` offers skin deep links first. |
 | `MacLibrary/MainView.swift` | The `NavigationSplitView` and its toolbar are replaced by `SkinIntegrationRoot()`. Window setup, alerts, global checks and URL handling stay. |
 | `WidgetExtension/ExtensionBundle.swift` | Adds `SkinStatusWidget()` and `SkinLiveActivityWidget()` next to the upstream control. |
 | `SFI/Info.plist` | `NSSupportsLiveActivities = YES` |

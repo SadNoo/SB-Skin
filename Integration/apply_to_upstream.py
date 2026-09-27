@@ -87,10 +87,49 @@ def matching_brace(text, open_index):
 # ---------------------------------------------------------------------------
 # Swift sources
 
+def patch_import_request(apple):
+    """The skin is compiled outside ApplicationLibrary and needs its public API."""
+    path = os.path.join(apple, "ApplicationLibrary", "Views", "Profile", "NewProfileView.swift")
+    text = read(path)
+    anchor = "    public struct ImportRequest: Codable, Hashable, Identifiable {"
+    if anchor not in text:
+        fail("NewProfileView.swift: ImportRequest not found")
+    opening = text.index("{", text.index(anchor))
+    closing = matching_brace(text, opening)
+    if "public init(name: String, url: String)" in text[opening:closing]:
+        return "NewProfileView.ImportRequest initializer already public"
+    insertion = text.rfind("\n", opening, closing)
+    text = text[:insertion] + (
+        "\n\n        // Skywave: allow the app modules to present remote profile imports.\n"
+        "        public init(name: String, url: String) {\n"
+        "            self.name = name\n"
+        "            self.url = url\n"
+        "        }"
+    ) + text[insertion:]
+    write(path, text)
+    return "exposed NewProfileView.ImportRequest initializer to app modules"
+
 
 def patch_ios_main_view(apple):
     path = os.path.join(apple, "SFI", "MainView.swift")
     text = read(path)
+    # Newer upstream layouts choose an iPad sidebar before tabViewContent. Patch
+    # that common entry point, including checkouts patched by an older script.
+    root_anchor = "    private var rootContent: some View {"
+    if root_anchor in text:
+        root_start = text.index(root_anchor)
+        root_open = text.index("{", root_start)
+        root_close = matching_brace(text, root_open)
+        text = text[:root_open + 1] + "\n        SkinIntegrationRoot()\n    " + text[root_close:]
+        url_anchor = "    private func openURL(url: URL) {\n"
+        if "SkinIntegration.handle(url, environments: environments)" not in text:
+            if url_anchor not in text:
+                fail("SFI/MainView.swift: openURL not found")
+            text = text.replace(url_anchor, url_anchor +
+                                "        if SkinIntegration.handle(url, environments: environments) {\n"
+                                "            return\n        }\n", 1)
+        write(path, text)
+        return "patched SFI/MainView.swift root for iPhone and iPad"
     if "SkinIntegrationRoot()" in text:
         return "SFI/MainView.swift already patched"
     anchor = "    private var tabViewContent: some View {\n"
@@ -479,6 +518,7 @@ def main():
 
     steps = [
         copy_sources(apple),
+        patch_import_request(apple),
         patch_ios_main_view(apple),
         patch_mac_main_view(apple),
         patch_widget_bundle(apple),
